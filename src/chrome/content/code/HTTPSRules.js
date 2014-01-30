@@ -404,7 +404,6 @@ const HTTPSRules = {
       this.rulesetsByID = {};
       this.rulesetsByName = {};
       var t1 = new Date().getTime();
-      this.checkMixedContentHandling();
 
       // Initialize database connection.
       var dbFile = FileUtils.getFile("ProfD",
