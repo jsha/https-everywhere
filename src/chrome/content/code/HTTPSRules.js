@@ -368,8 +368,15 @@ const HTTPSRules = {
       this.scanRulefiles(rulefiles);
 
       // Initialize database connection.
-      var dbFile = FileUtils.getFile("ProfD",
-        ["extensions", "https-everywhere@eff.org", "defaults", "rulesets.sqlite"]);
+      var dbFile;
+      try {
+        dbFile = FileUtils.getFile("ProfD",
+          ["extensions", "https-everywhere@eff.org", "defaults", "rulesets.sqlite"]);
+      } catch (e) {
+        dbFile = FileUtils.getFile("DefRt",
+          ["extensions", "https-everywhere@eff.org", "defaults", "rulesets.sqlite"]);
+      }
+
       var rulesetDBConn = Services.storage.openDatabase(dbFile);
       this.queryForRuleset = rulesetDBConn.createStatement(
         "select contents from rulesets where id = :id");
