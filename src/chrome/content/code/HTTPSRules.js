@@ -373,7 +373,7 @@ const HTTPSRules = {
         dbFile = FileUtils.getFile("ProfD",
           ["extensions", "https-everywhere@eff.org", "defaults", "rulesets.sqlite"]);
       } catch (e) {
-        dbFile = FileUtils.getFile("DefRt",
+        dbFile = FileUtils.getFile("CurProcD",
           ["extensions", "https-everywhere@eff.org", "defaults", "rulesets.sqlite"]);
       }
 
