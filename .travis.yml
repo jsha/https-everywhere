@@ -8,7 +8,7 @@ before_install:
   - "sh -e /etc/init.d/xvfb start"
 install:
   - "wget -q https://ftp.mozilla.org/pub/mozilla.org/labs/jetpack/addon-sdk-1.16.tar.gz"
-  - "tar xpzf jetpack-sdk-latest.tar.gz"
+  - "tar xpzf addon-sdk-1.16.tar.gz"
   - "source addon-sdk-1.16/bin/activate"
   - "sudo apt-get -qq install libxml2-dev libxslt-dev python-dev"
   - "pip install -r requirements.txt"
