@@ -1,15 +1,20 @@
-#!/bin/bash
-
-set -e
+#!/bin/bash -ex
 cd "`dirname $0`"
 
 # dummy Jetpack addon that contains tests
 TEST_ADDON_PATH=./https-everywhere-tests/
 LATEST_SDK_VERSION=1.16
 
-# firefox profile that has HTTPS Everywhere installed
-PROFILE_DIRECTORY=./test_profile
-HTTPSE_INSTALL_DIRECTORY=./test_profile/extensions/https-everywhere@eff.org
+# We'll create a Firefox profile here and install HTTPS Everywhere into it.
+PROFILE_DIRECTORY="$(mktemp -d)"
+trap 'rm -r "$PROFILE_DIRECTORY"' EXIT
+HTTPSE_INSTALL_DIRECTORY=$PROFILE_DIRECTORY/extensions/https-everywhere@eff.org
+XPI_NAME="pkg/`ls -tr pkg/ | tail -1`"
+
+./makexpi.sh --fast
+
+rsync -a https-everywhere-tests/test_profile_skeleton/ $PROFILE_DIRECTORY
+unzip -qd $HTTPSE_INSTALL_DIRECTORY $XPI_NAME
 
 if [ ! -d "$TEST_ADDON_PATH" ]; then
   echo "Test addon path does not exist"
@@ -36,9 +41,6 @@ if ! cfx --version | grep -q "$LATEST_SDK_VERSION"; then
     exit 1
 fi
 
-cd src/
-rsync -av --exclude-from="../.build_exclusions" . ../$HTTPSE_INSTALL_DIRECTORY
-
-cd ../$TEST_ADDON_PATH
+cd $TEST_ADDON_PATH
 echo "running tests"
-cfx test --profiledir="../$PROFILE_DIRECTORY" --verbose
+cfx test --profiledir="$PROFILE_DIRECTORY" --verbose
