@@ -33,6 +33,8 @@ fi
 
 if ! type cfx > /dev/null; then
   echo "Please activate the Firefox Addon SDK before running this script."
+  echo "https://ftp.mozilla.org/pub/mozilla.org/labs/jetpack/addon-sdk-1.16.tar.gz"
+  echo "Unpack and run `source addon-adk-1.16/bin/activate`"
   exit 1
 fi
 
