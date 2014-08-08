@@ -10,6 +10,5 @@ install:
   - "wget -q https://ftp.mozilla.org/pub/mozilla.org/labs/jetpack/addon-sdk-1.16.tar.gz"
   - "tar xpzf addon-sdk-1.16.tar.gz"
   - "cd addon-sdk-1.16; source bin/activate; cd -"
-  - "sudo apt-get -qq install libxml2-dev libxslt-dev python-dev"
-  - "pip install -r requirements.txt"
+  - "pip install --user -r requirements.txt"
 script: "./test.sh"
