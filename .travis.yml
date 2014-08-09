@@ -11,4 +11,5 @@ install:
   - "tar xpzf addon-sdk-1.16.tar.gz"
   - "cd addon-sdk-1.16; source bin/activate; cd -"
   - "sudo apt-get -qq install python-lxml"
+  - "pip install --user -r requirements.txt"
 script: "./test.sh"
