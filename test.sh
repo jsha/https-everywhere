@@ -14,7 +14,7 @@ HTTPSE_INSTALL_DIRECTORY=$PROFILE_DIRECTORY/extensions/https-everywhere@eff.org
 XPI_NAME="pkg/`ls -tr pkg/ | tail -1`"
 
 rsync -a https-everywhere-tests/test_profile_skeleton/ $PROFILE_DIRECTORY
-unzip -qd $HTTPSE_INSTALL_DIRECTORY $XPI_NAME
+#unzip -qd $HTTPSE_INSTALL_DIRECTORY $XPI_NAME
 
 if [ ! -d "$TEST_ADDON_PATH" ]; then
   echo "Test addon path does not exist"
