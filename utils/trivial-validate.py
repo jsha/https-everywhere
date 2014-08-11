@@ -58,6 +58,7 @@ def test_bad_regexp(tree):
         try:
             re.compile(f)
         except:
+            print f
             return False
     return True
 
