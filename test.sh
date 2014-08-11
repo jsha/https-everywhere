@@ -46,5 +46,5 @@ fi
 cd $TEST_ADDON_PATH
 echo "running tests"
 export DISPLAY=:99.0
-firefox -profile $PROFILE_DIRECTORY
+firefox -profile $PROFILE_DIRECTORY --display=$DISPLAY
 #DISPLAY=:99.0 cfx test --profiledir="$PROFILE_DIRECTORY" --verbose
