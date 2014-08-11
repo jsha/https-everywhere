@@ -1,10 +1,12 @@
+# Config copied from
+#  http://www.theautomatedtester.co.uk/blog/2012/using-travis-ci-for-building-and-testing-firefox-addons.html
+# Use node_js because there are maybe more workers?
 language: node_js
 before_script:
   - sh -e /etc/init.d/xvfb start
-  - "wget -q https://ftp.mozilla.org/pub/mozilla.org/labs/jetpack/addon-sdk-1.16.tar.gz"
-  - "tar xpzf addon-sdk-1.16.tar.gz"
-  - "cd addon-sdk-1.16; source bin/activate; cd -"
-  - "cd https-everywhere-tests"
+  - wget -q https://ftp.mozilla.org/pub/mozilla.org/labs/jetpack/addon-sdk-1.16.tar.gz
+  - tar xpzf addon-sdk-1.16.tar.gz
+  - cd addon-sdk-1.16; source bin/activate; cd -
 env:
   - DISPLAY=':99.0'
-script: cfx test
+script: ./test.sh
