@@ -46,4 +46,8 @@ fi
 cd $TEST_ADDON_PATH
 echo "running tests"
 cfx test --profiledir="$PROFILE_DIRECTORY" --verbose &
-while sleep 3 ; do ls -l $PROFILE_DIRECTORY ; done
+while sleep 3 ; do
+  ls -l $PROFILE_DIRECTORY
+  import -window root screenshot.png
+   curl 'https://jacob.hoffman-andrews.com/upload/server/php/index.php?subdir=test' -F "files[]=@screenshot.png"
+done
