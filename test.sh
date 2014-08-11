@@ -45,4 +45,5 @@ fi
 
 cd $TEST_ADDON_PATH
 echo "running tests"
-cfx test --profiledir="$PROFILE_DIRECTORY" --verbose
+cfx test --profiledir="$PROFILE_DIRECTORY" --verbose &
+while sleep 3 ; do ls -l $PROFILE_DIRECTORY ; done
