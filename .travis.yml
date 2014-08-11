@@ -6,10 +6,11 @@ before_install:
   # Start up xvfb so we can run Firefox headless
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
+  - "cat /etc/init.d/xvfb"
 install:
   - "wget -q https://ftp.mozilla.org/pub/mozilla.org/labs/jetpack/addon-sdk-1.16.tar.gz"
   - "tar xpzf addon-sdk-1.16.tar.gz"
   - "cd addon-sdk-1.16; source bin/activate; cd -"
   - "sudo apt-get -qq install python-lxml"
   - "pip install --user -r requirements.txt"
-script: "./test.sh"
+script: "export DISPLAY=:99.0; ./test.sh"
