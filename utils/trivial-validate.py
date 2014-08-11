@@ -57,9 +57,7 @@ def test_bad_regexp(tree):
              tree.xpath("/ruleset/securecookie/@host"):
         try:
             re.compile(f)
-        except Exception, e:
-            print f
-            print e
+        except:
             return False
     return True
 
