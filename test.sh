@@ -10,9 +10,14 @@ PROFILE_DIRECTORY="$(mktemp -d)"
 trap 'rm -r "$PROFILE_DIRECTORY"' EXIT
 HTTPSE_INSTALL_DIRECTORY=$PROFILE_DIRECTORY/extensions/https-everywhere@eff.org
 
+# Build the XPI to run all the validations in makexpi.sh, and to ensure that
+# we test what is actually getting built.
 ./makexpi.sh
 XPI_NAME="pkg/`ls -tr pkg/ | tail -1`"
 
+# Set up a skeleton profile and then install into it.
+# The skeleton contains a few files required to trick Firefox into thinking
+# that the extension was fully installed rather than just unpacked.
 rsync -a https-everywhere-tests/test_profile_skeleton/ $PROFILE_DIRECTORY
 unzip -qd $HTTPSE_INSTALL_DIRECTORY $XPI_NAME
 
@@ -46,8 +51,3 @@ fi
 cd $TEST_ADDON_PATH
 echo "running tests"
 cfx test --profiledir="$PROFILE_DIRECTORY" --verbose
-#while sleep 3 ; do
-#  ls -l $PROFILE_DIRECTORY
-#  import -window root screenshot.png
-#   curl 'https://jacob.hoffman-andrews.com/upload/server/php/index.php?subdir=test' -F "files[]=@screenshot.png"
-#done
