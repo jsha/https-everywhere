@@ -493,11 +493,6 @@ const HTTPSRules = {
                               // Why does JS have no tuples, again?
     var blob = {}; blob.newuri = null;
 
-    // Only bother to rewrite http or https URIs
-    if (input_uri.indexOf("http") === -1) {
-      return null;
-    }
-
     if (!alist) this.log(DBUG, "No applicable list rewriting " + input_uri.spec);
     this.log(NOTE, "Processing " + input_uri.spec);
 

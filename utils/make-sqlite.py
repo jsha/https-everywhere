@@ -11,7 +11,8 @@ import sys
 from collections import Counter
 from lxml import etree
 
-conn = sqlite3.connect(os.path.join(os.path.dirname(__file__), '../src/defaults/rulesets.sqlite'))
+conn = sqlite3.connect(os.path.join(os.path.dirname(__file__),
+  '../pkg/rulesets.unvalidated.sqlite'))
 c = conn.cursor()
 c.execute('''DROP TABLE IF EXISTS rulesets''')
 c.execute('''CREATE TABLE rulesets

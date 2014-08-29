@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 set -o errexit -o pipefail
 APP_NAME=https-everywhere
 
@@ -16,6 +16,7 @@ APP_NAME=https-everywhere
 #  ./makexpi.sh 0.2.3.development.2
 
 cd "`dirname $0`"
+RULESETS_UNVALIDATED="$PWD/pkg/rulesets.unvalidated.sqlite"
 RULESETS_SQLITE="$PWD/src/defaults/rulesets.sqlite"
 
 [ -d pkg ] || mkdir pkg
@@ -55,79 +56,22 @@ if [ -n "$1" ] && [ "$2" != "--no-recurse" ] && [ "$1" != "--fast" ] ; then
   exit 0
 fi
 
-# Same optimisation
-nohup cat src/chrome/content/rules/*.xml >/dev/null 2>/dev/null &
-
-
-if [ "$1" != "--fast" -o ! -f "$RULESETS_SQLITE" ] ; then
+# Only generate the sqlite database if any rulesets have changed. Tried
+# implementing this with make, but make is very slow with 11k+ input files.
+needs_update() {
+  find src/chrome/content/rules/ -newer $RULESETS_UNVALIDATED |\
+    grep -q .
+}
+if [ ! -f "$RULESETS_UNVALIDATED" ] || needs_update ; then
   echo "Generating sqlite DB"
   python2.7 ./utils/make-sqlite.py
 fi
 
-# =============== BEGIN VALIDATION ================
-# Unless we're in a hurry, validate the ruleset library & locales
-
-die() {
-  echo >&2 "ERROR:" "$@"
-  exit 1
-}
-
-if [ "$1" != "--fast" ] ; then
-  if [ -f utils/trivial-validate.py ]; then
-    VALIDATE="python2.7 ./utils/trivial-validate.py --ignoredups google --ignoredups facebook"
-  elif [ -f trivial-validate.py ] ; then
-    VALIDATE="python2.7 trivial-validate.py --ignoredups google --ignoredups facebook"
-  elif [ -x utils/trivial-validate ] ; then
-    # This case probably never happens
-    VALIDATE=./utils/trivial-validate
-  else
-    VALIDATE=./trivial-validate
-  fi
-
-  if $VALIDATE src/chrome/content/rules >&2
-  then
-    echo Validation of included rulesets completed. >&2
-    echo >&2
-  else
-    die "Validation of rulesets failed."
-  fi
-
-  # Check for xmllint.
-  type xmllint >/dev/null || die "xmllint not available"
-
-  GRAMMAR="utils/relaxng.xml"
-  if [ -f "$GRAMMAR" ]
-  then
-    # xmllint spams stderr with "<FILENAME> validates, even with the --noout
-    # flag. We can't grep -v for that line, because the pipeline will mask error
-    # status from xmllint. Instead we run it once going to /dev/null, and if
-    # there's an error run it again, showing only error output.
-    validate_grammar() {
-      find src/chrome/content/rules -name "*.xml" | \
-       xargs xmllint --noout --relaxng utils/relaxng.xml
-    }
-    if validate_grammar 2>/dev/null
-    then
-      echo Validation of rulesets against $GRAMMAR succeeded. >&2
-    else
-      validate_grammar 2>&1 | grep -v validates
-      die "Validation of rulesets against $GRAMMAR failed."
-    fi
-  else
-    echo Validation of rulesets against $GRAMMAR SKIPPED. >&2
-  fi
-
-  if [ -x ./utils/compare-locales.sh ] >&2
-  then
-    if ./utils/compare-locales.sh >&2
-    then
-      echo Validation of included locales completed. >&2
-    else
-      die "Validation of locales failed."
-    fi
-  fi
+# If the unvalidated rulesets have changed, validate and copy to the validated
+# rulesets file.
+if [ "$RULESETS_UNVALIDATED" -nt "$RULESETS_SQLITE" ] ; then
+  bash utils/validate.sh
 fi
-# =============== END VALIDATION ================
 
 # The name/version of the XPI we're building comes from src/install.rdf
 XPI_NAME="pkg/$APP_NAME-`grep em:version src/install.rdf | sed -e 's/[<>]/	/g' | cut -f3`"
@@ -161,7 +105,6 @@ if [ "$ret" != 0 ]; then
     exit "$?"
 else
   echo >&2 "Total included rules: `sqlite3 $RULESETS_SQLITE 'select count(*) from rulesets'`"
-  echo >&2 "Rules disabled by default: `find chrome/content/rules -name "*.xml" | xargs grep -F default_off | wc -l`"
   echo >&2 "Created $XPI_NAME"
   if [ -n "$BRANCH" ]; then
     cd ../..

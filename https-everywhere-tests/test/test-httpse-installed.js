@@ -20,4 +20,20 @@ exports["test httpse potentiallyApplicableRulesets"] = function(assert) {
               "Test that HTTPSE finds one applicable rule for www.eff.org");
 }
 
+exports["test Reddit ruleset"] = function(assert, done) {
+  var tabs = require("sdk/tabs");
+
+  var Application = Cc["@mozilla.org/fuel/application;1"].getService(Ci.fuelIApplication);
+  // Helper for making nsURI from string
+
+  function ready(event) {
+    Application.console.log("It readied");
+    done();
+  }
+
+  tabs.on('ready', ready);
+  tabs.open("http://www.reddit.com/robots.txt");
+  assert.equal(true, true);
+}
+
 require("sdk/test").run(exports);

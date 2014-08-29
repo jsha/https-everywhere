@@ -427,8 +427,13 @@ HTTPSEverywhere.prototype = {
       }
     }
 
-    let domWin = loadContext.associatedWindow;
-    if (!domWin) {
+    let domWin;
+    try {
+      domWin = loadContext.associatedWindow;
+    } catch(e) {
+      this.log(WARN, "Exception getting associatedWindow");
+    }
+    if (typeof domWin === "undefined") {
       this.log(NOTE, "failed to get DOMWin for " + channel.URI.spec);
       return null;
     }
@@ -441,12 +446,22 @@ HTTPSEverywhere.prototype = {
   // need to be appended to with reference only to the channel
   getApplicableListForChannel: function(channel) {
     var domWin = this.getWindowForChannel(channel);
-    return this.getApplicableListForDOMWin(domWin, "on-modify-request w " + domWin);
+
+    if (this.shouldIgnoreChannel(channel)) {
+      return null;
+    } else {
+      var lst = this.getApplicableListForDOMWin(
+        domWin, "on-modify-request w " + domWin);
+    }
   },
 
   newApplicableListForDOMWin: function(domWin) {
     if (!domWin || !(domWin instanceof CI.nsIDOMWindow)) {
       this.log(WARN, "Get alist without domWin");
+      return null;
+    }
+    var uri = domWin.document.baseURIObject;
+    if (this.shouldIgnoreURI(uri)) {
       return null;
     }
     var dw = domWin.top;
@@ -457,35 +472,69 @@ HTTPSEverywhere.prototype = {
 
   getApplicableListForDOMWin: function(domWin, where) {
     if (!domWin || !(domWin instanceof CI.nsIDOMWindow)) {
-      //this.log(WARN, "Get alist without domWin");
       return null;
     }
     var dw = domWin.top;
     var alist= this.getExpando(dw,"applicable_rules",null);
     if (alist) {
-      //this.log(DBUG,"get AL success in " + where);
       return alist;
     } else {
-      //this.log(DBUG, "Making new AL in getApplicableListForDOMWin in " + where);
+      var uri = domWin.document.baseURIObject;
+      if (this.shouldIgnoreURI(uri)) {
+        return null;
+      }
       alist = new ApplicableList(this.log,dw.document,dw);
       this.setExpando(dw,"applicable_rules",alist);
     }
     return alist;
   },
 
+  shouldIgnoreURI: function(uri) {
+    // Ignore all non-http(s) requests
+    return (!(uri.schemeIs("http") || uri.schemeIs("https")));
+  },
+
   // These are the highest level heuristics for figuring out whether
   // we should consider rewriting a URI.  Everything here should be simple
   // and avoid dependence on the ruleset library
-  shouldIgnoreURI: function(channel, alist) {
+  shouldIgnoreChannel: function(channel) {
     var uri = channel.URI;
-    // Ignore all non-http(s) requests?
-    if (!(uri.schemeIs("http") || uri.schemeIs("https"))) { return true; }
 
+    if (this.shouldIgnoreURI(uri)) {
+      return true;
+    }
     // If HTTP Nowhere is enabled, skip the rest of the shouldIgnoreURI checks
     if (this.httpNowhereEnabled) {
       return false;
     }
 
+    var spec = uri.spec;
+    // OCSP (currently) needs to be HTTP to avoid cert validation loops
+    // though someone should rev the spec to allow opportunistic encryption
+    if ("allowSTS" in channel) {
+      // Firefox 32+ lets us infer whether this is an OCSP request
+      if (!channel.allowSTS) {
+        this.log(INFO,
+          "Channel with HTTPS rewrites forbidden, deeming OCSP, for " +
+          spec);
+        return true;
+      }
+    } else {
+      // Firefox <32 requires a more hacky estimate
+      // load the list opportunistically to speed startup & FF 32+
+      if (this.ocspList == undefined) {
+        this.loadOCSPList();
+      }
+      if (this.ocspList.indexOf(spec.replace(/\/$/,'')) !== -1) {
+        this.log(INFO, "Known ocsp request " + spec);
+        return true;
+      }
+    }
+
+    return false;
+  },
+
+  isBlacklisted: function(uri, alist) {
     // These are URIs we've seen redirecting back in loops after we redirect them
     if (uri.spec in https_everywhere_blacklist) {
         this.log(DBUG, "Avoiding blacklisted " + uri.spec);
@@ -496,26 +545,6 @@ HTTPSEverywhere.prototype = {
         }
         return true;
     }
-
-    // OCSP (currently) needs to be HTTP to avoid cert validation loops
-    // though someone should rev the spec to allow opportunistic encryption
-    if ("allowSTS" in channel) {
-      // Firefox 32+ lets us infer whether this is an OCSP request
-      if (!channel.allowSTS) {
-        this.log(INFO, "Channel with HTTPS rewrites forbidden, deeming OCSP, for " + channel.URI.spec);
-        return true;
-      }
-    } else {
-      // Firefox <32 requires a more hacky estimate
-      // load the list opportunistically to speed startup & FF 32+
-      if (this.ocspList == undefined) { this.loadOCSPList(); }
-      if (this.ocspList.indexOf(uri.spec.replace(/\/$/,'')) !== -1) {
-        this.log(INFO, "Known ocsp request "+uri.spec);
-        return true;
-      }
-    }
-
-    return false;
   },
 
   loadOCSPList: function() {
@@ -531,19 +560,33 @@ HTTPSEverywhere.prototype = {
     }
   },
 
+  httpOnModifyRequest: function(channel) {
+    if (!(channel instanceof CI.nsIHttpChannel)) {
+      return;
+    }
+
+    var uri = channel.URI;
+    this.log(DBUG,"Got http-on-modify-request: " + uri.spec);
+    // lst is null if no window is associated (ex: some XHR)
+    if (this.shouldIgnoreChannel(channel)) {
+      return;
+    } else {
+      var lst = this.getApplicableListForChannel(channel);
+      if (this.isBlacklisted(uri, lst)) {
+        return;
+      }
+    }
+
+    HTTPS.replaceChannel(lst, channel, this.httpNowhereEnabled);
+  },
+
   observe: function(subject, topic, data) {
     // Top level glue for the nsIObserver API
     var channel = subject;
     //this.log(VERB,"Got observer topic: "+topic);
 
     if (topic == "http-on-modify-request") {
-      if (!(channel instanceof CI.nsIHttpChannel)) return;
-
-      this.log(DBUG,"Got http-on-modify-request: "+channel.URI.spec);
-      // lst is null if no window is associated (ex: some XHR)
-      var lst = this.getApplicableListForChannel(channel);
-      if (this.shouldIgnoreURI(channel, lst)) return;
-      HTTPS.replaceChannel(lst, channel, this.httpNowhereEnabled);
+      this.httpOnModifyRequest(channel);
     } else if (topic == "http-on-examine-response") {
          this.log(DBUG, "Got http-on-examine-response @ "+ (channel.URI ? channel.URI.spec : '') );
          HTTPS.handleSecureCookies(channel);
@@ -695,19 +738,6 @@ HTTPSEverywhere.prototype = {
     return cohort;
   },
 
-  // nsIChannelEventSink implementation
-  // XXX This was here for rewrites in the past.  Do we still need it?
-  onChannelRedirect: function(oldChannel, newChannel, flags) {  
-    const uri = newChannel.URI;
-    this.log(DBUG,"Got onChannelRedirect to "+uri.spec);
-    if (!(newChannel instanceof CI.nsIHttpChannel)) {
-      this.log(DBUG, newChannel + " is not an instance of nsIHttpChannel");
-      return;
-    }
-    var alist = this.juggleApplicableListsDuringRedirection(oldChannel, newChannel);
-    HTTPS.replaceChannel(alist, newChannel, this.httpNowhereEnabled);
-  },
-
   juggleApplicableListsDuringRedirection: function(oldChannel, newChannel) {
     // If the new channel doesn't yet have a list of applicable rulesets, start
     // with the old one because that's probably a better representation of how
@@ -730,7 +760,6 @@ HTTPSEverywhere.prototype = {
   },
 
   asyncOnChannelRedirect: function(oldChannel, newChannel, flags, callback) {
-        this.onChannelRedirect(oldChannel, newChannel, flags);
         callback.onRedirectVerifyCallback(0);
   },
 
