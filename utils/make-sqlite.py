@@ -42,7 +42,7 @@ xpath_host = etree.XPath("/ruleset/target/@host")
 xpath_ruleset = etree.XPath("/ruleset")
 
 # Sort filenames so output is deterministic.
-filenames = sorted(glob.glob('src/chrome/content/rules/*'))
+filenames = sorted(glob.glob('src/chrome/content/rules/*.xml'))
 
 counted_lowercase_names = Counter([name.lower() for name in filenames])
 most_common_entry = counted_lowercase_names.most_common(1)[0]
