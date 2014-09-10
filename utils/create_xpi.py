@@ -27,8 +27,8 @@ args = parser.parse_args()
 exclusions = []
 with open(args.exclusions) as f:
     for line in f:
-        exclusions.extend(glob.glob(line.strip()))
-exclusions = map(lambda x: './'+x, exclusions)
+        exclusions.append(line.strip())
+#exclusions = map(lambda x: './'+x, exclusions)
 
 compress = zipfile.ZIP_DEFLATED
 

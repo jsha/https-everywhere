@@ -13,6 +13,7 @@ http://www.python.org/download/releases/2.6/license/
 import struct, os, time, sys, shutil
 import binascii, cStringIO, stat
 import unicodedata
+import fnmatch
 
 try:
     import zlib # We may need its compression method
@@ -1148,8 +1149,11 @@ class ZipFile:
         for root,subfolders,files in os.walk(directory):
             for fi in files:
                 filename = os.path.join(root, fi)
-                if filename not in exclusions:
-                    file_dict.update({standardize_filename(filename): filename})
+                for excl in exclusions:
+                    if filename and fnmatch.fnmatch(filename, excl):
+                        filename = None
+                if filename:
+                  file_dict.update({standardize_filename(filename): filename})
         for new_filename, old_filename in sorted(file_dict.items()):
             self.write(old_filename, compress_type=compress_type, date_time=date_time)
 
