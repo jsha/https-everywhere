@@ -12,6 +12,7 @@ LATEST_SDK_VERSION=1.16
 # We'll create a Firefox profile here and install HTTPS Everywhere into it.
 PROFILE_DIRECTORY="$(mktemp -d)"
 #trap 'rm -r "$PROFILE_DIRECTORY"' EXIT
+(cd apache ; /usr/sbin/apache2 -d . -k start)
 HTTPSE_INSTALL_DIRECTORY=$PROFILE_DIRECTORY/extensions/https-everywhere@eff.org
 
 # Build the XPI to run all the validations in makexpi.sh, and to ensure that
@@ -56,7 +57,7 @@ cd $TEST_ADDON_PATH
 # If you just want to run Firefox with the latest code:
 if [ "$1" == "--justrun" ]; then
   echo "running firefox"
-  firefox -no-remote -profile "$PROFILE_DIRECTORY" http://localhost:4000
+  firefox -no-remote -profile "$PROFILE_DIRECTORY" http://localhost:4000/index.html
 else
   echo "running tests"
   cfx test --profiledir="$PROFILE_DIRECTORY" --verbose
