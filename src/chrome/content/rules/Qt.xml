@@ -1,5 +1,7 @@
 <!--
-	For other Digia coverage, see Digia.xml.
+	Other Nokia rulesets:
+
+		- Nokia.xml
 
 
 	Nontunctional subdomains:
@@ -18,7 +20,7 @@
 	<securecookie host="^(.*\.)?qt-project\.org$" name=".*" />
 
 
-	<rule from="^http://releases\.qt-project\.org/"
+	<rule from="^https?://releases\.qt-project\.org/"
 		to="https://qtproject.cachefly.net/" />
 
 	<!--
@@ -26,7 +28,6 @@
 
 			- bugreports
 			- codereview
-			- planet
 			- www
 				-->
   <exclusion pattern="lists\.qt-project\.org" />
