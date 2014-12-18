@@ -15,10 +15,19 @@ var aWindow = getWindow();
 let httpseProgressListener = {
   QueryInterface: XPCOMUtils.generateQI(["nsIWebProgressListener",
                                          "nsISupportsWeakReference"]),
-  onLocationChange: function(aBrowser, aWebProgress, aReq, aLoc) {
-    HTTPSEverywhere.log(3, "Got on location change! " + aBrowser + " " +
-    aWebProgress + " " + aReq + " " + aLoc);
-    HTTPSEverywhere.onLocationChange(aBrowser);
+  // TODO: This listener only gets set up for newly created tabs, not tabs
+  // resumed from last startup. Also, it seems like rules that apply to the
+  // top-level URL don't get added to the applicable list, only for
+  // subresources.
+  onLocationChange: function(aWebProgress, aReq, aLoc) {
+    HTTPSEverywhere.log(3, "Got on location change! " +
+      aWebProgress + " " + aReq + " " + aLoc);
+    var contentWindow = aWebProgress.DOMWindow
+    var mTab = aWindow.BrowserApp.getTabForWindow(contentWindow.top);
+    if (mTab) {
+      HTTPSEverywhere.log(3, "Calling out to on location change! " + mTab.browser);
+      HTTPSEverywhere.onLocationChange(mTab.browser);
+    }
   },
   onStateChange: function(aBrowser, aWebProgress, aReq, aFlags, aStatus) {
     /*if ((gBrowser && gBrowser.selectedBrowser === aBrowser) &&
@@ -109,6 +118,7 @@ var popupInfo = {
   alist: null,
   getApplicableList: function() {
     var browser = aWindow.BrowserApp.selectedBrowser;
+    HTTPSEverywhere.log(5, 'Getting applicable list from ' + browser);
     return HTTPSEverywhere.getApplicableListForBrowser(browser);
   },
   fill: function() {

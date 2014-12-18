@@ -429,6 +429,7 @@ HTTPSEverywhere.prototype = {
       this.log(WARN, "Get alist without browser");
       return null;
     }
+    this.log(5, 'overwriting applicablelist');
     var alist = new ApplicableList(this.log, browser.currentURI);
     this.setExpando(browser,"applicable_rules",alist);
     return alist;
