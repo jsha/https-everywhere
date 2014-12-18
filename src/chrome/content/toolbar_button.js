@@ -81,9 +81,29 @@ httpsEverywhere.toolbarButton = {
     // show ruleset counter when a tab is changed
     tb.updateRulesetsApplied();
 
+    // listener for top-level location change across all tabs
+    let httpseProgressListener = {
+      QueryInterface: XPCOMUtils.generateQI(["nsIWebProgressListener",
+                                             "nsISupportsWeakReference"]),
+
+      onLocationChange: function(aBrowser, aWebProgress, aReq, aLoc) {
+        HTTPSEverywhere.log(DBUG, "Got on location change!");
+        HTTPSEverywhere.onLocationChange(aBrowser);
+      },
+      onStateChange: function(aBrowser, aWebProgress, aReq, aFlags, aStatus) {
+        if ((gBrowser.selectedBrowser === aBrowser) &&
+            (aFlags & CI.nsIWebProgressListener.STATE_STOP) &&
+            aWebProgress.isTopLevel) {
+          HTTPSEverywhere.log(DBUG, "Got on state change");
+          tb.updateRulesetsApplied();
+        }
+      }
+    };
+
     // There is no gBrowser object on Android. Instead Android uses the
     // window.BrowserApp object:
     // https://developer.mozilla.org/en-US/Add-ons/Firefox_for_Android/API/BrowserApp
+    // But that's handled in AndroidUI.jsm
     if (gBrowser) {
       gBrowser.tabContainer.addEventListener(
         'TabSelect',
@@ -91,28 +111,20 @@ httpsEverywhere.toolbarButton = {
         false
       );
 
-      // add listener for top-level location change across all tabs
-      let httpseProgressListener = {
-        onLocationChange: function(aBrowser, aWebProgress, aReq, aLoc) {
-          HTTPSEverywhere.log(DBUG, "Got on location change!");
-          HTTPSEverywhere.onLocationChange(aBrowser);
-        },
-        onStateChange: function(aBrowser, aWebProgress, aReq, aFlags, aStatus) {
-          if ((gBrowser.selectedBrowser === aBrowser) &&
-              (aFlags & CI.nsIWebProgressListener.STATE_STOP) &&
-              aWebProgress.isTopLevel) {
-            HTTPSEverywhere.log(DBUG, "Got on state change");
-            tb.updateRulesetsApplied();
-          }
-        }
-      };
       gBrowser.addTabsProgressListener(httpseProgressListener);
+    } else if (window.BrowserApp) {
+      window.BrowserApp.deck.addEventListener("TabOpen", function(evt) {
+      dump("abopened");
+        HTTPSEverywhere.log(DBUG, "Tab opened!");
+        var browser = evt.target;
+        browser.addProgressListener(httpseProgressListener);
+      }, false);
     }
 
     // decide whether to show toolbar hint
     let hintPref = "extensions.https_everywhere.toolbar_hint_shown";
-    if (!Services.prefs.getPrefType(hintPref) 
-        || !Services.prefs.getBoolPref(hintPref)) { 
+    if (!Services.prefs.getPrefType(hintPref)
+        || !Services.prefs.getBoolPref(hintPref)) {
       // only run once
       Services.prefs.setBoolPref(hintPref, true);
       // gBrowser unavailable on Android, see above.

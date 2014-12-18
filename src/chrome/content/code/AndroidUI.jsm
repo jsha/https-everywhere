@@ -6,17 +6,36 @@ var HTTPSEverywhere = CC["@eff.org/https-everywhere;1"]
                       .getService(CI.nsISupports).wrappedJSObject;
 
 CU.import("resource://gre/modules/Prompt.jsm");
+Components.utils.import("resource://gre/modules/XPCOMUtils.jsm");
 
 var menuId;
 var urlbarId;
 var aWindow = getWindow();
 
+let httpseProgressListener = {
+  QueryInterface: XPCOMUtils.generateQI(["nsIWebProgressListener",
+                                         "nsISupportsWeakReference"]),
+  onLocationChange: function(aBrowser, aWebProgress, aReq, aLoc) {
+    HTTPSEverywhere.log(3, "Got on location change! " + aBrowser + " " +
+    aWebProgress + " " + aReq + " " + aLoc);
+    HTTPSEverywhere.onLocationChange(aBrowser);
+  },
+  onStateChange: function(aBrowser, aWebProgress, aReq, aFlags, aStatus) {
+    /*if ((gBrowser && gBrowser.selectedBrowser === aBrowser) &&
+        (aFlags & CI.nsIWebProgressListener.STATE_STOP) &&
+        aWebProgress.isTopLevel) {
+      HTTPSEverywhere.log(3, "Got on state change");
+      tb.updateRulesetsApplied();
+    } */
+  }
+};
 
 /*
  * Setup/Teardown for the UI
  */
 
 function loadIntoWindow() {
+  dump('hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii\n\n\n\n\n\njoihfdihdofighdfg\n\n');
   if (!aWindow) {
     return;
   }
@@ -27,6 +46,13 @@ function loadIntoWindow() {
   } else if (urlbarId) {
     aWindow.NativeWindow.pageactions.remove(urlbarId);
   }
+      aWindow.BrowserApp.deck.addEventListener("TabOpen", function(evt) {
+      dump("abopened");
+        HTTPSEverywhere.log(5, "Tab opened!");
+        var browser = evt.target;
+        browser.addProgressListener(httpseProgressListener);
+      }, false);
+
 }
 
 function unloadFromWindow() {

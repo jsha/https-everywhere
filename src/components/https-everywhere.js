@@ -310,10 +310,11 @@ HTTPSEverywhere.prototype = {
     if (!this.prefs.getBoolPref("globalEnabled")) {
       return;
     }
+      this.log(WARN, "Making applicable list for " + browser);
     try {
       this.newApplicableListForBrowser(browser);
     } catch (e) {
-      this.log(WARN, "Couldn't make applicable list"+e);
+      this.log(WARN, "Couldn't make applicable list for " + browser + ": " + e);
     }
   },
 
@@ -579,6 +580,7 @@ HTTPSEverywhere.prototype = {
       } else {
         this.log(WARN, "Initializing Firefox for Android UI");
         Cu.import("chrome://https-everywhere/content/code/AndroidUI.jsm");
+        this.log(WARN, ".. Done Initializing Firefox for Android UI");
         AndroidUI.init();
       }
       this.browser_initialised = true;
