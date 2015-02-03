@@ -12,6 +12,16 @@
 //    - connection timeout (30 seconds)
 //    - non-200 final status code
 //    - more than 10 redirects
+//
+// TODO: It seems like Node's HTTP library chooses among DNS responses
+// differently than Firefox. To reproduce, run:
+//   js rewriter/tester.js Apple
+// Much of the time this will fail on https://www.itunes.com/. However, loading
+// https://www.itunes.com in a browser succeeds reliably. Then run:
+//   dig www.itunes.com
+// and for each of the returned addresses,
+//   openssl s_client -connect 17.172.224.35:443 < /dev/null
+// You'll find that some IP addresses refuse the connection and some don't.
 
 var PARALLELISM = 10;
 
