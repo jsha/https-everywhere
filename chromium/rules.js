@@ -97,7 +97,7 @@ RuleSets.prototype = {
   },
 
   localPlatformRegexp: (function() {
-    var isOpera = navigator.userAgent.match(/(?:OPR|Opera)[\/\s](\d+)(?:\.\d+)/);
+    var isOpera = /(?:OPR|Opera)[\/\s](\d+)(?:\.\d+)/.test(this.userAgent);
     if (isOpera && isOpera.length === 2 && parseInt(isOpera[1]) < 23) {
       // Opera <23 does not have mixed content blocking
       log(DBUG, 'Detected that we are running Opera < 23');
