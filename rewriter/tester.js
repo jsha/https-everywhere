@@ -13,6 +13,8 @@
 //    - non-200 final status code
 //    - more than 10 redirects
 
+var PARALLELISM = 10;
+
 var path = require("path"),
     fs = require("fs"),
     DOMParser = require('xmldom').DOMParser,
@@ -28,9 +30,11 @@ var ruleSets = null;
 
 var cases = [];
 var ruleSets = new rules.RuleSets("fake user agent", lrucache.LRUCache, {});
+var q;
 
 function runTests() {
-  var q = async.queue(runTestCase, 50);
+  console.log("Running tests")
+  q = async.queue(runTestCase, PARALLELISM);
   q.drain = function() {
     console.log("All done.");
   }
@@ -56,7 +60,21 @@ function runTestCase(testCase, callback) {
       gzip: true,
       strictSSL: true
     }, function(error, response, body) {
-      if (error) {
+      // On failure, enqueue the test case for a second try later.
+      if (!testCase.tries) {
+        testCase.tries = 1;
+        q.push(testCase);
+        return callback();
+      }
+      if (error && error.message === "CERT_UNTRUSTED") {
+        // The nodejs cert validation is somewhat different from Firefox. The
+        // may be related to path building, intermediate cert fetching,
+        // different roots, and/or many other things. For now, just ignore any
+        // CERT_UNTRUSTED errors (but other errors like
+        // DEPTH_ZERO_SELF_SIGNED_CERT, we do not ignore).
+        console.log("PASS: ", uriString);
+        return callback();
+      } else if (error) {
         console.log("FAIL:", error.message.replace(/\n/g, ' '), ":", line);
         return callback();
       } else if (response.statusCode !== 200) {
@@ -81,6 +99,21 @@ function readXml(dir) {
   .pipe(es.map(function (entry, callback) {
     var filename = path.join(dir, entry.path);
     fs.readFile(filename, function(err, fileContents) {
+      // If the caller provided a filename or pattern on the command line, skip
+      // all rules that don't match that.
+      if (process.argv.length > 2) {
+        var matched = false;
+        for (var i = 2; i < process.argv.length; i++) {
+          if (filename.match(process.argv[i])) {
+            matched = true;
+            break;
+          }
+        }
+        if (!matched) {
+          callback();
+          return;
+        }
+      }
       var xml = new DOMParser().parseFromString(fileContents.toString('utf8'), 'text/xml');
       ruleSets.addFromXml(xml);
       var rulesets = xml.getElementsByTagName('ruleset');
@@ -122,4 +155,4 @@ function addTestCases(xml, filename) {
 }
 
 console.log("Loading rules...");
-readXml('../src/chrome/content/rules');
+readXml(__dirname + '/../rules');
