@@ -6,7 +6,7 @@
 cd $(dirname $0)
 TMP=`mktemp`
 trap 'rm "$TMP"' EXIT
-if ! git log --name-only --date=local --since=2015-02-05 --pretty=format: \
+if ! git log --name-only --date=local --since=2015-02-02 --pretty=format: \
       src/chrome/content/rules/ | sort -u | \
       xargs python2.7 https-everywhere-checker/src/https_everywhere_checker/check_rules.py \
       https-everywhere-checker/checker.config.sample ; then
