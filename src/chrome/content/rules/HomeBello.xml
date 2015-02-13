@@ -1,8 +1,10 @@
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://homebello.com/ => http://homebello.com/: Redirect for 'http://homebello.com/' missing Location
 	Some (most?) pages redirect to http.
 
 -->
-<ruleset name="HomeBello (partial)">
+<ruleset name="HomeBello (partial)" default_off='failed ruleset test'>
 
 	<target host="homebello.com" />
 	<target host="www.homebello.com" />

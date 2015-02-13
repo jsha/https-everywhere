@@ -1,4 +1,6 @@
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://cdnsecureservep1.amexserve-static.com/ => https://cdnsecureservep1.amexserve-static.com/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
 	For other American Express coverage, see AmericanExpress.xml.
 
 
@@ -7,7 +9,7 @@
 		- cdnsecureservep1
 
 -->
-<ruleset name="AmExserve-static.com">
+<ruleset name="AmExserve-static.com" default_off='failed ruleset test'>
 
 	<target host="cdnsecureservep1.amexserve-static.com" />
 

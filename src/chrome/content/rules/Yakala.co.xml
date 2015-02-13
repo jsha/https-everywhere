@@ -1,4 +1,8 @@
-<ruleset name="Yakala.co" platform="mixedcontent">
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://yakala.co/ => https://www.yakala.co/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+-->
+<ruleset name="Yakala.co" platform="mixedcontent" default_off='failed ruleset test'>
   <target host="www.yakala.co" />
   <target host="yakala.co" />
 

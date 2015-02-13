@@ -1,4 +1,8 @@
-<ruleset name="Codecov">
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://codecov.io/ => https://codecov.io/: None
+-->
+<ruleset name="Codecov" default_off='failed ruleset test'>
 	<target host="codecov.io" />
 	<target host="*.codecov.io" />
 

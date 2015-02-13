@@ -1,4 +1,8 @@
-<ruleset name="Energy Made Easy">
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://energymadeeasy.gov.au/ => https://www.energymadeeasy.gov.au/: (28, 'Operation timed out after 15000 milliseconds with 0 bytes received')
+-->
+<ruleset name="Energy Made Easy" default_off='failed ruleset test'>
 	<target host="energymadeeasy.gov.au" />
 	<target host="*.energymadeeasy.gov.au" />
 

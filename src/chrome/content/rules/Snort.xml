@@ -1,4 +1,6 @@
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://snort.org/ => https://snort.org/: (51, "SSL: no alternative certificate subject name matches target host name 'snort.org'")
 	Nonfunctional subdomains:
 
 		- blog *
@@ -7,7 +9,7 @@
 	* blogger
 
 -->
-<ruleset name="Snort (partial)">
+<ruleset name="Snort (partial)" default_off='failed ruleset test'>
 
 	<target host="snort.org" />
 	<target host="*.snort.org" />

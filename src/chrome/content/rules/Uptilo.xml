@@ -1,4 +1,6 @@
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://uptilo.com/ => https://uptilo.com/: Cycle detected - URL already encountered: http://uptilo.com/
 	CDN buckets:
 
 		- d3rvd86gsdneth.cloudfront.net
@@ -6,7 +8,7 @@
 			- assets.uptilo.com
 
 -->
-<ruleset name="Uptilo">
+<ruleset name="Uptilo" default_off='failed ruleset test'>
 
 	<target host="uptilo.com" />
 	<target host="*.uptilo.com" />

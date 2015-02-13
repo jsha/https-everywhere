@@ -1,4 +1,6 @@
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://www.cointrader.net/ => https://www.cointrader.net/: Cycle detected - URL already encountered: https://www.cointrader.net/
 	Nonfunctional subdomains:
 
 		- news *
@@ -6,7 +8,7 @@
 	* Shows dev.cointrader.biz
 
 -->
-<ruleset name="Cointrader.net (partial)">
+<ruleset name="Cointrader.net (partial)" default_off='failed ruleset test'>
 
 	<target host="cointrader.net" />
 	<target host="www.cointrader.net" />

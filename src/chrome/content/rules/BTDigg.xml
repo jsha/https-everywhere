@@ -1,4 +1,8 @@
-<ruleset name="BTDigg">
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://btdigg.org/ => https://btdigg.org/: (6, 'Could not resolve host: btdigg.org')
+-->
+<ruleset name="BTDigg" default_off='failed ruleset test'>
 
 	<target host="btdigg.org" />
 	<!--	* for cross-domain cookie.	-->

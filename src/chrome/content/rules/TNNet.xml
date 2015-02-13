@@ -1,4 +1,8 @@
-<ruleset name="TNNet">
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://tnnet.fi/ => https://www.tnnet.fi/: (28, 'Resolving timed out after 10518 milliseconds')
+-->
+<ruleset name="TNNet" default_off='failed ruleset test'>
 	<!--
 	https://tnnet.fi is not responding without www
 	-->

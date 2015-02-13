@@ -1,4 +1,6 @@
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://shareholder.com/ => https://shareholder.com/: Redirect for 'https://shareholder.com/' missing Location
 	For other NASDAQ coverage, see NASDAQ.com.xml.
 
 
@@ -7,7 +9,7 @@
 		- files		(404, valid cert)
 
 -->
-<ruleset name="Shareholder.com (partial)">
+<ruleset name="Shareholder.com (partial)" default_off='failed ruleset test'>
 
 	<target host="shareholder.com" />
 	<target host="*.shareholder.com" />

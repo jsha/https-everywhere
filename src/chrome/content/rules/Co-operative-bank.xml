@@ -1,4 +1,8 @@
-<ruleset name="co-operative bank">
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://co-operativebank.co.uk/ => https://www.co-operativebank.co.uk/: (28, 'Connection timed out after 10001 milliseconds')
+-->
+<ruleset name="co-operative bank" default_off='failed ruleset test'>
 
 	<target host="co-operativebank.co.uk" />
 	<target host="*.co-operativebank.co.uk" />

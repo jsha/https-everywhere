@@ -1,8 +1,10 @@
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://invoiceocean.com/ => https://invoiceocean.com/: (28, 'Connection timed out after 10000 milliseconds')
 	For other Radgost coverage, see Fakturownia.xml.
 
 -->
-<ruleset name="Invoice Ocean">
+<ruleset name="Invoice Ocean" default_off='failed ruleset test'>
 
 	<target host="invoiceocean.com" />
 	<target host="*.invoiceocean.com" />

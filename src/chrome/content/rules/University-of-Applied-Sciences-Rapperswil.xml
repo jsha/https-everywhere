@@ -1,8 +1,10 @@
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://hsr.ch/ => https://www.hsr.ch/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
 	For problematic rules, see University-of-Applied-Sciences-Rapperswil-mismatches.xml.
 
 -->
-<ruleset name="University of Applied Sciences Rapperswil">
+<ruleset name="University of Applied Sciences Rapperswil" default_off='failed ruleset test'>
 
 	<target host="hsr.ch" />
 	<target host="*.hsr.ch" />

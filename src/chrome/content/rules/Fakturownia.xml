@@ -1,4 +1,6 @@
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://fakturownia.pl/ => https://fakturownia.pl/: (28, 'Connection timed out after 10000 milliseconds')
 	CDN buckets:
 
 		- d1dmfej9n5lgmh.cloudfront.net
@@ -16,7 +18,7 @@
 		- pomoc		(works, mismatched, CN: *.sugester.pl)
 
 -->
-<ruleset name="Fakturownia (partial)">
+<ruleset name="Fakturownia (partial)" default_off='failed ruleset test'>
 
 	<target host="fakturownia.pl" />
 	<target host="*.fakturownia.pl" />

@@ -1,4 +1,8 @@
-<ruleset name="Mercury News">
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://mmedia.me/ => https://mmedia.me/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+-->
+<ruleset name="Mercury News" default_off='failed ruleset test'>
 
 	<target host="mmedia.me" />
 	<target host="*.mmedia.me" />

@@ -1,8 +1,10 @@
 <!--
+Disabled by https-everywhere-checker because:
+Non-2xx HTTP code: http://pace2race.com/ (200) => http://pace2race.com/ (403)
 	Some pages redirect to http.
 
 -->
-<ruleset name="Pace2Race (partial)">
+<ruleset name="Pace2Race (partial)" default_off='failed ruleset test'>
 
 	<target host="pace2race.com" />
 	<target host="www.pace2race.com" />

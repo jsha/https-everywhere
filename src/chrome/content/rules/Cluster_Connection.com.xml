@@ -1,8 +1,11 @@
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://clusterconnection.com/ => http://clusterconnection.com/: (28, 'Connection timed out after 10000 milliseconds')
+Fetch error: http://www.clusterconnection.com/ => http://www.clusterconnection.com/: (28, 'Connection timed out after 10001 milliseconds')
 	Some pages redirect to http.
 
 -->
-<ruleset name="Cluster Connection.com (partial)">
+<ruleset name="Cluster Connection.com (partial)" default_off='failed ruleset test'>
 
 	<target host="clusterconnection.com" />
 	<target host="www.clusterconnection.com" />

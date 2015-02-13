@@ -1,4 +1,6 @@
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://www.gannett-cdn.com/ => http://www.gannett-cdn.com/: None
 	For other Gannett Company coverage, see Gannett-Company.xml.
 
 
@@ -7,7 +9,7 @@
 		- www.gannett-cdn.com.edgesuite.net
 
 -->
-<ruleset name="gannett-cdn.com (partial)">
+<ruleset name="gannett-cdn.com (partial)" default_off='failed ruleset test'>
 
 	<target host="www.gannett-cdn.com" />
 		<!--

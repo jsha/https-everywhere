@@ -1,4 +1,8 @@
-<ruleset name="Alza.cz">
+<!--
+Disabled by https-everywhere-checker because:
+Non-2xx HTTP code: http://alza.cz/ (200) => https://www.alza.cz/ (303)
+-->
+<ruleset name="Alza.cz" default_off='failed ruleset test'>
   <target host="alza.cz" />
   <target host="*.alza.cz" />
 

@@ -1,4 +1,7 @@
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://reportingproject.net/ => https://reportingproject.net/: (28, 'Resolving timed out after 10517 milliseconds')
+Fetch error: http://www.reportingproject.net/ => https://www.reportingproject.net/: (28, 'Resolving timed out after 10517 milliseconds')
 	Organized Crime and Corruption Reporting Project
 
 	Other Organized Crime and Corruption Reporting Project rulesets:
@@ -6,7 +9,7 @@
 		- OCCRP.org.xml
 
 -->
-<ruleset name="Reporting Project.net">
+<ruleset name="Reporting Project.net" default_off='failed ruleset test'>
 
 	<target host="reportingproject.net" />
 	<target host="www.reportingproject.net" />

@@ -1,4 +1,8 @@
-<ruleset name="Unigine">
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://unigine.com/ => https://unigine.com/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+-->
+<ruleset name="Unigine" default_off='failed ruleset test'>
 
 	<target host="unigine.com" />
 	<target host="*.unigine.com" />

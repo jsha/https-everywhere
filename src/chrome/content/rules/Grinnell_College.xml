@@ -1,4 +1,6 @@
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://grinnell.edu/ => http://grinnell.edu/: (28, 'Connection timed out after 10001 milliseconds')
 	Nonfunctional subdomains:
 
 		- athdb			(replies with http)
@@ -41,7 +43,7 @@
 		- webmail
 
 -->
-<ruleset name="Grinnell College (partial)">
+<ruleset name="Grinnell College (partial)" default_off='failed ruleset test'>
 
 	<target host="grinnell.edu" />
 	<target host="*.grinnell.edu" />

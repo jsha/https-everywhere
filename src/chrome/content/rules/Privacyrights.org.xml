@@ -1,4 +1,8 @@
-<ruleset name="Privacy Rights Clearinghouse">
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://privacyrights.org/ => https://www.privacyrights.org/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+-->
+<ruleset name="Privacy Rights Clearinghouse" default_off='failed ruleset test'>
   <target host="privacyrights.org" />
   <target host="www.privacyrights.org" />
 

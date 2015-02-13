@@ -1,4 +1,8 @@
-<ruleset name="Naiin.com">
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://www.naiin.com/ => https://www.naiin.com/: (28, 'Operation timed out after 15000 milliseconds with 393216 bytes received')
+-->
+<ruleset name="Naiin.com" default_off='failed ruleset test'>
   <target host="naiin.com" />
   <target host="www.naiin.com" />
 

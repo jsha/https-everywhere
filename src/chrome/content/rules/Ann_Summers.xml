@@ -1,4 +1,6 @@
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://annsummers.com/ => https://www.annsummers.com/: None
 	Other Ann Summers rulesets:
 
 		- Ann_Summers_Jobs.xml
@@ -10,7 +12,7 @@
 		- careers	(works; mismatched, CN: *.gridserver.com)
 
 -->
-<ruleset name="Ann Summers (partial)">
+<ruleset name="Ann Summers (partial)" default_off='failed ruleset test'>
 
 	<target host="annsummers.com" />
 	<target host="*.annsummers.com" />

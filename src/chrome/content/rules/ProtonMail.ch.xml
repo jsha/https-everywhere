@@ -1,4 +1,8 @@
-<ruleset name="ProtonMail.ch">
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://www.protonmail.ch/ => https://www.protonmail.ch/: (51, "SSL: no alternative certificate subject name matches target host name 'www.protonmail.ch'")
+-->
+<ruleset name="ProtonMail.ch" default_off='failed ruleset test'>
 
 	<target host="protonmail.ch" />
 	<target host="www.protonmail.ch" />

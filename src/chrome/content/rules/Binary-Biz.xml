@@ -1,4 +1,8 @@
-<ruleset name="Binary Biz">
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://totalrecall.com/ => https://www.totalrecall.com/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+-->
+<ruleset name="Binary Biz" default_off='failed ruleset test'>
 
 	<target host="binarybiz.com"/>
 	<target host="www.binarybiz.com"/>

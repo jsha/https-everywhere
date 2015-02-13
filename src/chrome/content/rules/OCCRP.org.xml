@@ -1,8 +1,10 @@
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://occrp.org/ => https://reportingproject.net/occrp/: (28, 'Resolving timed out after 10515 milliseconds')
 	For other Organized Crime and Corruption Reporting Project coverage, see Reporting_Project.net.xml.
 
 -->
-<ruleset name="OCCRP.org (partial)">
+<ruleset name="OCCRP.org (partial)" default_off='failed ruleset test'>
 
 	<target host="occrp.org" />
 	<target host="*.occrp.org" />

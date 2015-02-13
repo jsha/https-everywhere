@@ -1,4 +1,6 @@
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://aidsmap.com/ => https://www.aidsmap.com/: (28, 'Operation timed out after 15002 milliseconds with 0 bytes received')
 	^: 404
 
 
@@ -9,7 +11,7 @@
 	* Secured by us
 
 -->
-<ruleset name="aidsmap.com">
+<ruleset name="aidsmap.com" default_off='failed ruleset test'>
 
 	<target host="aidsmap.com" />
 	<target host="*.aidsmap.com" />

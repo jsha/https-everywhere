@@ -1,4 +1,9 @@
-<ruleset name="Alecomm.com">
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://alecomm.com/ => https://alecomm.com/: (28, 'Operation timed out after 15000 milliseconds with 507904 bytes received')
+Fetch error: http://www.alecomm.com/ => https://www.alecomm.com/: (28, 'Operation timed out after 15000 milliseconds with 503260 bytes received')
+-->
+<ruleset name="Alecomm.com" default_off='failed ruleset test'>
 
 	<target host="alecomm.com" />
 	<target host="www.alecomm.com" />

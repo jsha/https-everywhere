@@ -1,4 +1,6 @@
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://virool.com/ => https://virool.com/: (28, 'Operation timed out after 15000 milliseconds with 0 bytes received')
 	Nonfunctional subdomains:
 
 		- discuss *
@@ -13,7 +15,7 @@
 		- tools.virool.com
 
 -->
-<ruleset name="Virool.com (partial)">
+<ruleset name="Virool.com (partial)" default_off='failed ruleset test'>
 
 	<target host="virool.com" />
 	<target host="*.virool.com" />

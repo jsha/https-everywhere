@@ -1,4 +1,6 @@
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://gsu.edu/ => http://gsu.edu/: Cycle detected - URL already encountered: http://gsu.edu/
 	For rules causing false/broken MCB, see GSU.edu-falsemixed.xml.
 
 
@@ -115,7 +117,7 @@
 	² Unsecurable <= refused
 
 -->
-<ruleset name="GSU.edu (partial)">
+<ruleset name="GSU.edu (partial)" default_off='failed ruleset test'>
 
 	<target host="gsu.edu" />
 	<target host="*.gsu.edu" />

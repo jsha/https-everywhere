@@ -1,4 +1,8 @@
-<ruleset name="Urban Villa.nl">
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://urbanvilla.nl/ => https://urbanvilla.nl/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+-->
+<ruleset name="Urban Villa.nl" default_off='failed ruleset test'>
 
 	<target host="urbanvilla.nl" />
 	<target host="*.urbanvilla.nl" />

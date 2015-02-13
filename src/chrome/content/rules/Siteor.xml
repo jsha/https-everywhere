@@ -1,4 +1,6 @@
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://siteor.pl/ => https://siteor.pl/: (28, 'Connection timed out after 10001 milliseconds')
 	For other Radgost coverage, see Fakturownia.xml.
 
 
@@ -19,7 +21,7 @@
 	* Mismatched, CN: firmlet.pl
 
 -->
-<ruleset name="Siteor (partial)">
+<ruleset name="Siteor (partial)" default_off='failed ruleset test'>
 
 	<target host="*.siteor.com" />
 	<target host="siteor.pl" />
