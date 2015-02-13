@@ -1,4 +1,6 @@
 <!--
+	Disabled: Breaks logged-in tracking.
+	See https://github.com/EFForg/https-everywhere/issues/1039
 	Problematic subdomains:
 
 		- ^		(cert only matches www)
@@ -19,7 +21,7 @@
 		- wwwapps
 
 -->
-<ruleset name="UPS.com (partial)">
+<ruleset name="UPS.com (partial)" default_off="Breaks logged-in tracking">
 
 	<target host="ups.com" />
 	<target host="*.ups.com" />
