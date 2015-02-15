@@ -17,6 +17,6 @@ if ! git log --name-only --date=local --since="2015-02-12 6:00" --pretty=format:
   exit 1
 else
   echo "Ruleset diffs vs master:"
-  git diff --name-only -- src/chrome/content/rules
+  git diff --name-only origin/master -- src/chrome/content/rules
   exit 0
 fi
