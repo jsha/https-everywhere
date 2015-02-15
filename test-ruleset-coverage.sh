@@ -17,6 +17,7 @@ if ! git log --name-only --date=local --since="2015-02-12 6:00" --pretty=format:
   exit 1
 else
   echo "Ruleset diffs vs master:"
+  git fetch origin master
   git for-each-ref --sort=authordate refs
   git diff --name-only origin/master -- src/chrome/content/rules
   exit 0
