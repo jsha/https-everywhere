@@ -16,5 +16,7 @@ if ! git log --name-only --date=local --since="2015-02-12 6:00" --pretty=format:
        "to ruleset with additional HTTP URLs to test rewriting and fetching."
   exit 1
 else
+  echo "Ruleset diffs vs master:"
+  git diff --name-only -- src/chrome/content/rules
   exit 0
 fi
