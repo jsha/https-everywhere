@@ -1,4 +1,10 @@
-<ruleset name="PPS">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://winterthur.zh.piratenpartei.ch/ => https://winterthur.zh.piratenpartei.ch/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+
+-->
+<ruleset name="PPS" default_off='failed ruleset test'>
 	<target host="piratenpartei.ch"/>
 	<target host="*.piratenpartei.ch"/>
 	<target host="piraten-partei.ch"/>

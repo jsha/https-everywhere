@@ -1,4 +1,10 @@
-<ruleset name="HVG Kiad&#243; Zrt.">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://www.hvgkonyvek.hu/ => https://www.hvgkonyvek.hu/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+
+-->
+<ruleset name="HVG Kiad&#243; Zrt." default_off='failed ruleset test'>
 	<target host="www.hvgkonyvek.hu" />
 
 	<securecookie host="^www\.hvgkonyvek\.hu$" name=".*" />

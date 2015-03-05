@@ -1,4 +1,8 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://create.msdn.com/ => https://create.msdn.com/: (6, 'Could not resolve host: create.msdn.com')
+
 	For other Microsoft coverage, see Microsoft.xml.
 
 
@@ -56,7 +60,7 @@
 	* Secured by us
 
 -->
-<ruleset name="MSDN (partial)">
+<ruleset name="MSDN (partial)" default_off='failed ruleset test'>
 
 	<target host="*.msdn.com" />
 		<!--

@@ -1,4 +1,11 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://us-st.xhamster.com/ => https://us-st.xhamster.com/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+Fetch error: http://eu-st.xhamster.com/ => https://eu-st.xhamster.com/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+Fetch error: http://static.xhamster.com/ => https://static.xhamster.com/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+Fetch error: http://suggestions.xhamster.com/ => https://xhamster.uservoice.com/: Too many redirects while fetching 'https://xhamster.uservoice.com/'
+
 	xHamster uses *.xhcdn.com and cdn13.com
 	As far as I can tell all of it either only supports http or redirects from https to something else.
 
@@ -65,7 +72,7 @@
 	*** Unsecurable
 
 -->
-<ruleset name="xHamster.com">
+<ruleset name="xHamster.com" default_off='failed ruleset test'>
 
 	<target host="xhamster.com" />
 		<target host="www.xhamster.com" />

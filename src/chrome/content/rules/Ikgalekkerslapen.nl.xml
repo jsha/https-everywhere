@@ -1,8 +1,12 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://www.ikgalekkerslapen.nl/ => https://www.ikgalekkerslapen.nl/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+
 	^ikgalekkerslapen.nl doesn't exist.
 
 -->
-<ruleset name="ikgalekkerslapen.nl">
+<ruleset name="ikgalekkerslapen.nl" default_off='failed ruleset test'>
 
 	<target host="www.ikgalekkerslapen.nl" />
 

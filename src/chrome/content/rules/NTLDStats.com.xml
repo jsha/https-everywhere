@@ -1,4 +1,9 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://ntldstats.com/ => https://ntldstats.com/: 'NoneType' object has no attribute 'xpath'
+Fetch error: http://www.ntldstats.com/ => https://www.ntldstats.com/: 'NoneType' object has no attribute 'xpath'
+
 	Fully covered subdomains:
 
 		- (www.)?
@@ -16,7 +21,7 @@
 		- x.ntldstats.com
 
 -->
-<ruleset name="nTLDStats.com">
+<ruleset name="nTLDStats.com" default_off='failed ruleset test'>
 
 	<target host="ntldstats.com" />
 	<target host="x.ntldstats.com" />

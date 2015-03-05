@@ -1,4 +1,8 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://blog.p2pfoundation.net/ => https://blog.p2pfoundation.net/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+
 	(www.): shows blog
 
 
@@ -15,7 +19,7 @@
 	² Unsecurable <= 404
 
 -->
-<ruleset name="P2P Foundation.net (partial)">
+<ruleset name="P2P Foundation.net (partial)" default_off='failed ruleset test'>
 
 	<target host="blog.p2pfoundation.net" />
 

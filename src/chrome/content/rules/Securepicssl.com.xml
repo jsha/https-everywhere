@@ -1,8 +1,12 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://securepcissl.com/ => https://securepcissl.com/: Too many redirects while fetching 'https://securepcissl.com/'
+
 	For other Shopping Cart Elite coverage, see Shopping_Cart_Elite.xml.
 
 -->
-<ruleset name="securepicssl.com">
+<ruleset name="securepicssl.com" default_off='failed ruleset test'>
 
 	<target host="securepcissl.com" />
 	<target host="*.securepcissl.com" />

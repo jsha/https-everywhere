@@ -1,8 +1,12 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://caseking.de/ => https://www.caseking.de/: (28, 'Operation timed out after 15000 milliseconds with 127255 bytes received')
+
 	Cert only matches www.
 
 -->
-<ruleset name="Caseking.de">
+<ruleset name="Caseking.de" default_off='failed ruleset test'>
 
 	<target host="caseking.de" />
 	<target host="*.caseking.de" />

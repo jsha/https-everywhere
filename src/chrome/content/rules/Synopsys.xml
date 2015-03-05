@@ -1,11 +1,15 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://www.synopsys.co.jp/ => http://www.synopsys.co.jp/: (56, 'Recv failure: Connection reset by peer')
+
 
 	Nonfunctional domains:
 
 		- www.synopsys.com.cn	(!www doesn't exist)
 
 -->
-<ruleset name="Synopsys (partial)">
+<ruleset name="Synopsys (partial)" default_off='failed ruleset test'>
 
 	<target host="www.synopsys.co.jp" />
 	<target host="synopsys.com" />

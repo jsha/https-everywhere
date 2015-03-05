@@ -1,4 +1,10 @@
-<ruleset name="Gimmickwear">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://gimmickwear.com/ => https://gimmickwear.com/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+
+-->
+<ruleset name="Gimmickwear" default_off='failed ruleset test'>
 
 	<target host="gimmickwear.com" />
 	<target host="*.gimmickwear.com" />

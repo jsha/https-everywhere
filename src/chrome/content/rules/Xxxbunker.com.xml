@@ -1,4 +1,8 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://759425240.r.cdn77.net/ => https://xxxbunker.com/: (6, 'Could not resolve host: 759425240.r.cdn77.net')
+
 	CDN buckets:
 
 		- xxxbunker.cachefly.net
@@ -17,7 +21,7 @@
 	Many pages redirect to http, others 404.
 
 -->
-<ruleset name="xxxbunker.com (partial)">
+<ruleset name="xxxbunker.com (partial)" default_off='failed ruleset test'>
 
 	<target host="109.201.146.247" />
 	<target host="759425240.r.cdn77.net" />

@@ -1,4 +1,11 @@
-<ruleset name="Mjam">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://mjam.net/ => https://www.mjam.net/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+Fetch error: http://www.mjam.net/ => https://www.mjam.net/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+
+-->
+<ruleset name="Mjam" default_off='failed ruleset test'>
 
 	<target host="mjam.net" />
 	<target host="www.mjam.net" />

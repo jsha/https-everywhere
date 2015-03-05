@@ -1,11 +1,18 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://diagrid.org/ => https://diagrid.org/: (28, 'Operation timed out after 15002 milliseconds with 0 bytes received')
+Fetch error: http://www.diagrid.org/ => https://diagrid.org/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+Fetch error: http://dia-grid.org/ => https://diagrid.org/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+Fetch error: http://www.dia-grid.org/ => https://diagrid.org/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+
 	For other Purdue University coverage, see Purdue_University.xml.
 
 
 	Cert only matches ^diagrid.org.
 
 -->
-<ruleset name="DiaGrid">
+<ruleset name="DiaGrid" default_off='failed ruleset test'>
 
 	<target host="diagrid.org" />
 	<target host="www.diagrid.org" />

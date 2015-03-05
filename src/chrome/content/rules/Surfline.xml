@@ -1,4 +1,11 @@
-<ruleset name="Surfline">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://surfline.com/ => https://www.surfline.com/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+Fetch error: http://www.surfline.com/ => https://www.surfline.com/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+
+-->
+<ruleset name="Surfline" default_off='failed ruleset test'>
 
 	<target host="surfline.com" />
 	<target host="www.surfline.com" />

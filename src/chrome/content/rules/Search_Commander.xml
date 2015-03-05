@@ -1,4 +1,10 @@
-<ruleset name="Search Commander">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://searchcommander.com/ => https://searchcommander.com/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+
+-->
+<ruleset name="Search Commander" default_off='failed ruleset test'>
 
 	<target host="searchcommander.com" />
 	<target host="*.searchcommander.com" />

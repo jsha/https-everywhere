@@ -1,8 +1,12 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://preyproject.com/ => https://preyproject.com/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+
 	support.preyproject.com is handled mostly in ENTP-clients.xml.
 
 -->
-<ruleset name="Prey (partial)">
+<ruleset name="Prey (partial)" default_off='failed ruleset test'>
 
 	<target host="preyproject.com" />
 	<target host="*.preyproject.com" />

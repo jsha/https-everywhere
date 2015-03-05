@@ -1,4 +1,12 @@
-<ruleset name="Ticketportal.sk">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://ticketportal.sk/ => https://ssl.ticketportal.sk/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+Fetch error: http://www.ticketportal.sk/ => https://ssl.ticketportal.sk/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+Fetch error: http://ssl.ticketportal.sk/ => https://ssl.ticketportal.sk/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+
+-->
+<ruleset name="Ticketportal.sk" default_off='failed ruleset test'>
   <target host="ticketportal.sk" />
   <target host="www.ticketportal.sk" />
   <target host="ssl.ticketportal.sk" />

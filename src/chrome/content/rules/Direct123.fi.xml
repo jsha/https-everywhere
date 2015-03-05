@@ -1,4 +1,11 @@
-<ruleset name="Direct123.fi">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://direct123.fi/ => https://www.direct123.fi/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+Fetch error: http://www.direct123.fi/ => https://www.direct123.fi/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+
+-->
+<ruleset name="Direct123.fi" default_off='failed ruleset test'>
 	<target host="direct123.fi"/>
 	<target host="www.direct123.fi"/>
 

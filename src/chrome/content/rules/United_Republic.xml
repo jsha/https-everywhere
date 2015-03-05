@@ -1,4 +1,8 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://www.unitedrepublic.org/ => http://www.unitedrepublic.org/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+
 	Other United Republic rulesets:
 
 		- Represent.Us.xml
@@ -13,7 +17,7 @@
 	Some pages redirect to http.
 
 -->
-<ruleset name="United Republic (partial)">
+<ruleset name="United Republic (partial)" default_off='failed ruleset test'>
 
 	<target host="unitedrepublic.org" />
 	<target host="www.unitedrepublic.org" />

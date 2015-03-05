@@ -1,4 +1,10 @@
-<ruleset name="Commonwealth Courts Portal">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://comcourts.gov.au/ => https://www.comcourts.gov.au/: (51, "SSL: no alternative certificate subject name matches target host name 'comcourts.gov.au'")
+
+-->
+<ruleset name="Commonwealth Courts Portal" default_off='failed ruleset test'>
 	<target host="comcourts.gov.au" />
 	<target host="*.comcourts.gov.au" />
 

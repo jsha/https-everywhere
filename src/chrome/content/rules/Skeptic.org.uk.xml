@@ -1,4 +1,9 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://skeptic.org.uk/ => https://skeptic.org.uk/: Too many redirects while fetching 'https://skeptic.org.uk/'
+Fetch error: http://www.skeptic.org.uk/ => https://www.skeptic.org.uk/: Too many redirects while fetching 'https://www.skeptic.org.uk/'
+
 	Mixed content:
 
 		- Images, from:
@@ -9,7 +14,7 @@
 	* Secured by us
 
 -->
-<ruleset name="Skeptic.org.uk">
+<ruleset name="Skeptic.org.uk" default_off='failed ruleset test'>
 
 	<target host="skeptic.org.uk" />
 	<target host="www.skeptic.org.uk" />

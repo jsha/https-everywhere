@@ -1,8 +1,13 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://radioplayer.co.uk/ => https://www.radioplayer.co.uk/: (60, 'SSL certificate problem: self signed certificate')
+Fetch error: http://www.radioplayer.co.uk/ => https://www.radioplayer.co.uk/: (60, 'SSL certificate problem: self signed certificate')
+
 	^: 404, cert only matches www.
 
 -->
-<ruleset name="Radioplayer.co.uk">
+<ruleset name="Radioplayer.co.uk" default_off='failed ruleset test'>
 
 	<target host="radioplayer.co.uk" />
 	<target host="www.radioplayer.co.uk" />

@@ -1,4 +1,10 @@
-<ruleset name="Xsens.com (partial)">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://xsens.com/ => https://xsens.com/: 'NoneType' object has no attribute 'xpath'
+
+-->
+<ruleset name="Xsens.com (partial)" default_off='failed ruleset test'>
 
 	<target host="xsens.com" />
 	<target host="www.xsens.com" />

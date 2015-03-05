@@ -1,4 +1,10 @@
-<ruleset name="Mike Masin">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://mikemasin.com/ => https://mikemasin.com/: (28, 'Connection timed out after 10001 milliseconds')
+
+-->
+<ruleset name="Mike Masin" default_off='failed ruleset test'>
 
 	<target host="mikemasin.com" />
 	<target host="*.mikemasin.com" />

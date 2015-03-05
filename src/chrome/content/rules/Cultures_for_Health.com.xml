@@ -1,4 +1,10 @@
-<ruleset name="Cultures for Health.com">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://culturesforhealth.com/ => https://culturesforhealth.com/: (28, 'Connection timed out after 10000 milliseconds')
+
+-->
+<ruleset name="Cultures for Health.com" default_off='failed ruleset test'>
 
 	<target host="culturesforhealth.com" />
 	<target host="*.culturesforhealth.com" />

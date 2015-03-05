@@ -1,11 +1,15 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://cryptoseal.com/ => https://cryptoseal.com/: (28, 'Operation timed out after 0 milliseconds with 0 out of 0 bytes received')
+
 	Fully covered subdomains:
 
 		- (www.)
 		- connect
 
 -->
-<ruleset name="CryptoSeal.com">
+<ruleset name="CryptoSeal.com" default_off='failed ruleset test'>
 
 	<target host="cryptoseal.com" />
 	<target host="*.cryptoseal.com" />

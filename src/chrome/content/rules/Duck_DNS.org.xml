@@ -1,4 +1,11 @@
-<ruleset name="Duck DNS.org">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://duckdns.org/ => https://duckdns.org/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+Fetch error: http://www.duckdns.org/ => https://www.duckdns.org/: (28, 'Resolving timed out after 10521 milliseconds')
+
+-->
+<ruleset name="Duck DNS.org" default_off='failed ruleset test'>
 
 	<target host="duckdns.org" />
 	<target host="www.duckdns.org" />

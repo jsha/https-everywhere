@@ -1,4 +1,10 @@
-<ruleset name="TICKETsage">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://ticketsage.com/ => https://ticketsage.com/: (7, 'Failed to connect to ticketsage.com port 443: Connection refused')
+
+-->
+<ruleset name="TICKETsage" default_off='failed ruleset test'>
 
 	<target host="ticketsage.com" />
 	<target host="*.ticketsage.com" />

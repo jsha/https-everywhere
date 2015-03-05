@@ -1,4 +1,10 @@
-<ruleset name="JUA.com">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://jua.com/ => https://jua.com/: (7, 'Failed to connect to jua.com port 443: Connection timed out')
+
+-->
+<ruleset name="JUA.com" default_off='failed ruleset test'>
 
 	<target host="jua.com" />
 	<target host="www.jua.com" />

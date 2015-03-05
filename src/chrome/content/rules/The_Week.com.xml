@@ -1,4 +1,11 @@
-<ruleset name="The Week.com">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://theweek.com/ => https://theweek.com/: (35, 'Unknown SSL protocol error in connection to theweek.com:443 ')
+Fetch error: http://www.theweek.com/ => https://www.theweek.com/: (28, 'Operation timed out after 0 milliseconds with 0 out of 0 bytes received')
+
+-->
+<ruleset name="The Week.com" default_off='failed ruleset test'>
 
 	<target host="theweek.com" />
 	<target host="www.theweek.com" />

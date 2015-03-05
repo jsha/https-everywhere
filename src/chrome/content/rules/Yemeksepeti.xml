@@ -1,4 +1,10 @@
-<ruleset name="Yemeksepeti">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://yemeksepeti.com/ => https://www.yemeksepeti.com/: Redirect for 'http://www.yemeksepeti.com/TR/Sehir-Secim/a.ys?redirectUrl=Default.aspx' missing Location
+
+-->
+<ruleset name="Yemeksepeti" default_off='failed ruleset test'>
   <target host="yemeksepeti.com" />
   <target host="images.yemeksepetim.com" />
   <target host="*.yemeksepeti.com" />

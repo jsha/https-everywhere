@@ -1,4 +1,8 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Non-2xx HTTP code: http://fundaciontelevisa.org/ (200) => https://fundaciontelevisa.org/ (403)
+
 	Mixed content:
 
 		- css on www from www *
@@ -10,7 +14,7 @@
 	* Secured by us
 
 -->
-<ruleset name="Fundacion Televisa.org (false MCB)" platform="mixedcontent">
+<ruleset name="Fundacion Televisa.org (false MCB)" platform="mixedcontent" default_off='failed ruleset test'>
 
 	<target host="fundaciontelevisa.org" />
 	<target host="*.fundaciontelevisa.org" />

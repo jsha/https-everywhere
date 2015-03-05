@@ -1,4 +1,8 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://action.eff.org/ => https://action.eff.org/: (28, 'Connection timed out after 10001 milliseconds')
+
 	Other EFF rulesets:
 
 		- Copyright-Watch.org.xml
@@ -12,7 +16,7 @@
 		- Trolling_Effects.org.xml
 
 -->
-<ruleset name="EFF">
+<ruleset name="EFF" default_off='failed ruleset test'>
 
 	<target host="eff.org" />
 	<target host="*.eff.org" />

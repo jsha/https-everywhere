@@ -1,4 +1,11 @@
-<ruleset name="etherpad.fr">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://etherpad.fr/ => https://etherpad.fr/: (52, 'Empty reply from server')
+Fetch error: http://www.etherpad.fr/ => https://etherpad.fr/: (6, 'Could not resolve host: www.etherpad.fr')
+
+-->
+<ruleset name="etherpad.fr" default_off='failed ruleset test'>
   <target host="etherpad.fr" />
   <target host="www.etherpad.fr" />
 

@@ -1,4 +1,11 @@
-<ruleset name="Insecure.ws">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://insecure.ws/ => https://insecure.ws/: (28, 'Connection timed out after 10001 milliseconds')
+Fetch error: http://www.insecure.ws/ => https://www.insecure.ws/: (28, 'Connection timed out after 10000 milliseconds')
+
+-->
+<ruleset name="Insecure.ws" default_off='failed ruleset test'>
 
 	<target host="insecure.ws" />
 	<target host="www.insecure.ws" />

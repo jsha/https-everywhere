@@ -1,4 +1,10 @@
-<ruleset name="Powerbuy.co.th">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://powerbuy.co.th/ => https://www.powerbuy.co.th/: (28, 'Operation timed out after 15000 milliseconds with 146795 bytes received')
+
+-->
+<ruleset name="Powerbuy.co.th" default_off='failed ruleset test'>
   <target host="powerbuy.co.th" />
   <target host="www.powerbuy.co.th" />
 

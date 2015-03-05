@@ -1,4 +1,10 @@
-<ruleset name="speech.leseweb.dk">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://speech.leseweb.dk/ => https://speech.leseweb.dk/: (35, 'Unknown SSL protocol error in connection to speech.leseweb.dk:443 ')
+
+-->
+<ruleset name="speech.leseweb.dk" default_off='failed ruleset test'>
   <target host="speech.leseweb.dk" />
 
   <rule from="^http://speech\.leseweb\.dk/" to="https://speech.leseweb.dk/" />

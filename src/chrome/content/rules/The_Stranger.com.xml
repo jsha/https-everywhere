@@ -1,4 +1,8 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://thestranger.com/ => https://thestranger.com/: 'NoneType' object has no attribute 'xpath'
+
 	Nonfunctional subdomains:
 
 		- slog
@@ -11,7 +15,7 @@
 	* Secured by us
 
 -->
-<ruleset name="The Stranger.com (partial)">
+<ruleset name="The Stranger.com (partial)" default_off='failed ruleset test'>
 
 	<target host="thestranger.com" />
 	<target host="*.thestranger.com" />

@@ -1,8 +1,12 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Non-2xx HTTP code: http://datacentrumgids.nl/ (200) => https://datacentrumgids.nl/ (525)
+
 	For other xCAT coverage, XCAT.nl.xml.
 
 -->
-<ruleset name="DatacentrumGids.nl">
+<ruleset name="DatacentrumGids.nl" default_off='failed ruleset test'>
 
 	<target host="datacentrumgids.nl" />
 	<target host="*.datacentrumgids.nl" />

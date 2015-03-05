@@ -1,4 +1,8 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://openhub.net/ => https://openhub.net/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+
 	For rules causing false/broken MCB, see Open_Hub.net-falsemixed.xml.
 
 
@@ -16,7 +20,7 @@
 	* Secured by us
 
 -->
-<ruleset name="Open Hub.net (partial)">
+<ruleset name="Open Hub.net (partial)" default_off='failed ruleset test'>
 
 	<target host="openhub.net" />
 	<target host="*.openhub.net" />

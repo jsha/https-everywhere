@@ -1,4 +1,10 @@
-<ruleset name="NTVSpor" platform="mixedcontent">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://ntvspor.net/ => https://www.ntvspor.net/: (56, 'Recv failure: Connection reset by peer')
+
+-->
+<ruleset name="NTVSpor" platform="mixedcontent" default_off='failed ruleset test'>
   <target host="www.ntvspor.net" />
   <target host="ntvspor.net" />
 

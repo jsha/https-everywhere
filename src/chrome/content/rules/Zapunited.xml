@@ -1,4 +1,8 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://zapunited.com/ => http://zapunited.com/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+
 	At least some pages redirect to http.
 
 
@@ -7,7 +11,7 @@
 		- www.media	(mismatched, CN: zapunited.com)
 
 -->
-<ruleset name="zapunited (partial)">
+<ruleset name="zapunited (partial)" default_off='failed ruleset test'>
 
 	<target host="zapunited.com" />
 	<target host="*.zapunited.com" />

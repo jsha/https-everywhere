@@ -1,4 +1,10 @@
-<ruleset name="WithSIX (Partial)">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://connect.withsix.com/ => http://connect.withsix.com/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+
+-->
+<ruleset name="WithSIX (Partial)" default_off='failed ruleset test'>
   <target host="dev.withsix.com" />
   <target host="connect.withsix.com" />
 

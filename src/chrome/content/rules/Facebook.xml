@@ -1,4 +1,15 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://a1.sphotos.ak.fbcdn.net/ => https://fbcdn-sphotos-a.akamaihd.net/: (6, 'Could not resolve host: a1.sphotos.ak.fbcdn.net')
+Fetch error: http://a2.sphotos.ak.fbcdn.net/ => https://fbcdn-sphotos-a.akamaihd.net/: (6, 'Could not resolve host: a2.sphotos.ak.fbcdn.net')
+Fetch error: http://a3.sphotos.ak.fbcdn.net/ => https://fbcdn-sphotos-a.akamaihd.net/: (6, 'Could not resolve host: a3.sphotos.ak.fbcdn.net')
+Fetch error: http://a4.sphotos.ak.fbcdn.net/ => https://fbcdn-sphotos-a.akamaihd.net/: (6, 'Could not resolve host: a4.sphotos.ak.fbcdn.net')
+Fetch error: http://a5.sphotos.ak.fbcdn.net/ => https://fbcdn-sphotos-a.akamaihd.net/: (6, 'Could not resolve host: a5.sphotos.ak.fbcdn.net')
+Fetch error: http://a6.sphotos.ak.fbcdn.net/ => https://fbcdn-sphotos-a.akamaihd.net/: (6, 'Could not resolve host: a6.sphotos.ak.fbcdn.net')
+Fetch error: http://a7.sphotos.ak.fbcdn.net/ => https://fbcdn-sphotos-a.akamaihd.net/: (6, 'Could not resolve host: a7.sphotos.ak.fbcdn.net')
+Fetch error: http://a8.sphotos.ak.fbcdn.net/ => https://fbcdn-sphotos-a.akamaihd.net/: (6, 'Could not resolve host: a8.sphotos.ak.fbcdn.net')
+
 	Other Facebook rulesets:
 
 		- Facebook_Studio.xml
@@ -115,7 +126,7 @@
 		- prod.facebook.com
 
 -->
-<ruleset name="Facebook">
+<ruleset name="Facebook" default_off='failed ruleset test'>
 
 	<target host=      "facebook.be" />
 	<target host=  "www.facebook.be" />

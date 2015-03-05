@@ -1,4 +1,9 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://palgrave.com/ => https://www.palgrave.com/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+Fetch error: http://www.palgrave.com/ => https://www.palgrave.com/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+
 	^: mismatched, CN: www.macmillandictionary.com
 
 
@@ -12,7 +17,7 @@
 	* Secured by us
 
 -->
-<ruleset name="Palgrave.com">
+<ruleset name="Palgrave.com" default_off='failed ruleset test'>
 
 	<target host="palgrave.com" />
 	<target host="www.palgrave.com" />

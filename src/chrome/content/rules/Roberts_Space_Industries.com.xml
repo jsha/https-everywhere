@@ -1,11 +1,15 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://robertsspaceindustries.com/ => https://robertsspaceindustries.com/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+
 	Fully covered subdomains:
 
 		- (www.)
 		- forums
 
 -->
-<ruleset name="Roberts Space Industries.com">
+<ruleset name="Roberts Space Industries.com" default_off='failed ruleset test'>
 
 	<target host="robertsspaceindustries.com" />
 	<target host="*.robertsspaceindustries.com" />

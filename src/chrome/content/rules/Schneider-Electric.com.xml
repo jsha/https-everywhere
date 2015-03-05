@@ -1,4 +1,8 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://schneider-electric.com/ => http://schneider-electric.com/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+
 	CDN buckets:
 
 		- a70.g.akamai.net/7/70/36744/v001/schneider2.download.akamai.com/
@@ -57,7 +61,7 @@
 				- solutions/ww/en/rme/\d+/image/
 
 -->
-<ruleset name="Schneider-Electric.com (partial)">
+<ruleset name="Schneider-Electric.com (partial)" default_off='failed ruleset test'>
 
 	<target host="schneider-electric.com" />
 	<target host="*.schneider-electric.com" />

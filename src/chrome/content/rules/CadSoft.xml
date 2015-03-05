@@ -1,4 +1,11 @@
-<ruleset name="CadSoft">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://cadsoft.de/ => https://www.cadsoft.de/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+Fetch error: http://www.cadsoft.de/ => https://www.cadsoft.de/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+
+-->
+<ruleset name="CadSoft" default_off='failed ruleset test'>
 
 	<target host="cadsoft.de" />
 	<target host="www.cadsoft.de" />

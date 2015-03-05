@@ -1,4 +1,19 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://www.act.ulaval.ca/ => https://www.act.ulaval.ca/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+Fetch error: http://www.aide.ulaval.ca/ => https://www.aide.ulaval.ca/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+Fetch error: http://www.arsq.asso.ulaval.ca/ => https://www.arsq.asso.ulaval.ca/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+Fetch error: http://authentification.ulaval.ca/ => https://authentification.ulaval.ca/: (7, 'Failed to connect to authentification.ulaval.ca port 80: Connection refused')
+Fetch error: http://www.modules.fd.ulaval.ca/ => https://www.modules.fd.ulaval.ca/: (51, "SSL: no alternative certificate subject name matches target host name 'www.modules.fd.ulaval.ca'")
+Fetch error: http://fesp.ulaval.ca/ => https://fesp.ulaval.ca/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+Fetch error: http://www.fesp.ulaval.ca/ => https://www.fesp.ulaval.ca/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+Fetch error: http://www.cms.fss.ulaval.ca/ => https://www.cms.fss.ulaval.ca/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+Fetch error: http://reparti.gel.ulaval.ca/ => https://reparti.gel.ulaval.ca/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+Fetch error: http://vision.gel.ulaval.ca/ => https://vision.gel.ulaval.ca/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+Fetch error: http://www.ift.ulaval.ca/ => https://www.ift.ulaval.ca/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+Fetch error: http://www.psy.ulaval.ca/ => https://www.psy.ulaval.ca/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+
 	Known nonfunctional sub domains as of 02/2015:
 		- aelies (self signed certificate)
 		- arcticnet (invalid certificate)
@@ -31,7 +46,7 @@
 		- sgc (does not load)
 
 -->
-<ruleset name="Universit&#233; Laval (partial)">
+<ruleset name="Universit&#233; Laval (partial)" default_off='failed ruleset test'>
 	<target host="ulaval.ca" />
 	<target host="www.ulaval.ca" />
 	<target host="www2.ulaval.ca" />

@@ -1,4 +1,10 @@
-<ruleset name="agmk.net">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://agmk.net/ => https://agmk.net/: (28, 'Resolving timed out after 10521 milliseconds')
+
+-->
+<ruleset name="agmk.net" default_off='failed ruleset test'>
 
 	<target host="agmk.net" />
 	<target host="*.agmk.net" />

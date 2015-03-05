@@ -1,4 +1,8 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://centreon.com/ => https://centreon.com/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+
 	CDN buckets:
 
 		- forum-merethis.netdna-ssl.com
@@ -44,7 +48,7 @@
 	* Secured by us
 
 -->
-<ruleset name="Centreon.com (partial)">
+<ruleset name="Centreon.com (partial)" default_off='failed ruleset test'>
 
 	<target host="centreon.com" />
 	<target host="*.centreon.com" />

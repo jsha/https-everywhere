@@ -1,4 +1,8 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://bugs.gnewsense.org/ => https://savannah.nongnu.org/bugs/?group=gnewsense: (60, 'SSL certificate problem: unable to get local issuer certificate')
+
 	Other Free Software Foundation rulesets:
 
 		- GMP_Lib.org.xml
@@ -31,7 +35,7 @@
 	* Secured by us
 
 -->
-<ruleset name="Free Software Foundation">
+<ruleset name="Free Software Foundation" default_off='failed ruleset test'>
 
 	<target host="fsf.org" />
 	<target host="*.fsf.org" />

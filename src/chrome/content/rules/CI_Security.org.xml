@@ -1,4 +1,8 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Non-2xx HTTP code: http://cisecurity.org/ (200) => https://cisecurity.org/ (404)
+
 	Fully covered subdomains:
 
 		- (www.)?
@@ -14,7 +18,7 @@
 		- www.blog.cisecurity.org
 
 -->
-<ruleset name="CI Security.org">
+<ruleset name="CI Security.org" default_off='failed ruleset test'>
 
 	<target host="cisecurity.org" />
 	<target host="*.cisecurity.org" />

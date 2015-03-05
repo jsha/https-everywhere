@@ -1,4 +1,8 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://blackboard.com/ => https://blackboard.com/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+
 	Other Blackboard rulesets:
 
 		- SafeAssign.xml
@@ -9,7 +13,7 @@
 		- blog		(shows default MediaTemple page)
 
 -->
-<ruleset name="Blackboard (partial)">
+<ruleset name="Blackboard (partial)" default_off='failed ruleset test'>
 
 	<target host="blackboard.com" />
 	<target host="*.blackboard.com" />

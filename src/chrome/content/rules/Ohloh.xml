@@ -1,4 +1,14 @@
-<ruleset name="Ohloh">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://ohloh.net/ => https://www.ohloh.net/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+Fetch error: http://ohloh.com/ => https://www.ohloh.net/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+Fetch error: http://www.ohloh.com/ => https://www.ohloh.net/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+Fetch error: http://ohloh.org/ => https://www.ohloh.net/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+Fetch error: http://www.ohloh.org/ => https://www.ohloh.net/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+
+-->
+<ruleset name="Ohloh" default_off='failed ruleset test'>
   <target host="ohloh.net" />
   <target host="*.ohloh.net" />
   <target host="ohloh.com" />

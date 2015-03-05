@@ -1,4 +1,11 @@
-<ruleset name="albinoloverats">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://albinoloverats.net/ => https://albinoloverats.net/: (28, 'Operation timed out after 14005 milliseconds with 0 out of 9704 bytes received')
+Fetch error: http://www.albinoloverats.net/ => https://www.albinoloverats.net/: (28, 'Connection timed out after 10001 milliseconds')
+
+-->
+<ruleset name="albinoloverats" default_off='failed ruleset test'>
 
 	<target host="albinoloverats.net" />
 	<target host="www.albinoloverats.net" />

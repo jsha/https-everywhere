@@ -1,4 +1,11 @@
-<ruleset name="Poliisi.fi" platform="mixedcontent">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://poliisi.fi/ => https://poliisi.fi/: (7, 'Failed to connect to poliisi.fi port 80: Connection refused')
+Fetch error: http://www.poliisi.fi/ => https://poliisi.fi/: (7, 'Failed to connect to poliisi.fi port 443: Connection refused')
+
+-->
+<ruleset name="Poliisi.fi" platform="mixedcontent" default_off='failed ruleset test'>
   <target host="poliisi.fi" />
   <target host="www.poliisi.fi" />
 

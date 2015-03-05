@@ -1,4 +1,11 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://live.piratenpartei.de/ => https://live.piratenpartei.de/: (7, 'Failed to connect to live.piratenpartei.de port 80: Connection refused')
+Fetch error: http://planet.piratenpartei.de/ => https://planet.piratenpartei.de/: (52, 'Empty reply from server')
+Fetch error: http://proxy.piratenpartij.nl/ => https://proxy.piratenpartij.nl/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+Fetch error: http://tpb.piratenpartij.nl/ => https://tpb.piratenpartij.nl/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+
 	See PirateParty-mismatches for problematic rules.
 
 	Nonfunctional domains:
@@ -16,7 +23,7 @@
 		- PPS.xml
 
 -->
-<ruleset name="Pirate Party">
+<ruleset name="Pirate Party" default_off='failed ruleset test'>
 
 	<target host="junge-piraten.de" />
 		<target host="www.junge-piraten.de" />

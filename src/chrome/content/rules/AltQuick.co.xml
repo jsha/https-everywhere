@@ -1,4 +1,11 @@
-<ruleset name="AltQuick.co">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://altquick.co/ => https://altquick.co/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+Fetch error: http://www.altquick.co/ => https://www.altquick.co/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+
+-->
+<ruleset name="AltQuick.co" default_off='failed ruleset test'>
 
 	<target host="altquick.co" />
 	<target host="www.altquick.co" />

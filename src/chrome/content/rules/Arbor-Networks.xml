@@ -1,4 +1,9 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://arbor.net/ => https://www.arbornetworks.com/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+Fetch error: http://arbornetworks.com/ => https://arbornetworks.com/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+
 	Problematic domains:
 
 		- (www.)?arbor.net ¹
@@ -15,7 +20,7 @@
 		- www.partner.arbornetworks.com
 
 -->
-<ruleset name="Arbor Networks">
+<ruleset name="Arbor Networks" default_off='failed ruleset test'>
 
 	<target host="arbor.net" />
 	<target host="*.arbor.net" />

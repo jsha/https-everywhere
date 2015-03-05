@@ -1,8 +1,14 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://radikale.dk/ => https://radikale.dk/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+Fetch error: http://www.radikale.dk/ => https://www.radikale.dk/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+Fetch error: http://fleresomdig.radikale.dk/ => https://fleresomdig.radikale.dk/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+
 	Currently gets a few pictures from Twitter over
 	forced HTTP; otherwise works perfectly well.
 -->
-<ruleset name="Radikale.dk">
+<ruleset name="Radikale.dk" default_off='failed ruleset test'>
 	<target host="radikale.dk" />
 	<target host="www.radikale.dk" />
 	<target host="fleresomdig.radikale.dk" />

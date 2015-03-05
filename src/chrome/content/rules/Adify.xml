@@ -1,4 +1,10 @@
-<ruleset name="Adify">
+
+<!--
+Disabled by https-everywhere-checker because:
+Non-2xx HTTP code: http://ad.afy11.net/ (200) => https://ad.afy11.net/ (403)
+
+-->
+<ruleset name="Adify" default_off='failed ruleset test'>
 
 	<target host="ad.afy11.net" />
 

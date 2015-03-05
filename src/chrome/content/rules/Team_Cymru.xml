@@ -1,4 +1,11 @@
-<ruleset name="Team Cymru">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://team-cymru.org/ => https://team-cymru.org/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+Fetch error: http://www.team-cymru.org/ => https://www.team-cymru.org/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+
+-->
+<ruleset name="Team Cymru" default_off='failed ruleset test'>
 
 	<target host="team-cymru.org" />
 	<target host="www.team-cymru.org" />

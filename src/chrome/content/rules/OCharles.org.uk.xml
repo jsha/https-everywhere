@@ -1,4 +1,11 @@
-<ruleset name="OCharles.org.uk">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://ocharles.org.uk/ => https://ocharles.org.uk/: (7, 'Failed to connect to ocharles.org.uk port 80: Connection refused')
+Fetch error: http://www.ocharles.org.uk/ => https://www.ocharles.org.uk/: (7, 'Failed to connect to www.ocharles.org.uk port 80: Connection refused')
+
+-->
+<ruleset name="OCharles.org.uk" default_off='failed ruleset test'>
 
 	<target host="ocharles.org.uk" />
 	<target host="www.ocharles.org.uk" />

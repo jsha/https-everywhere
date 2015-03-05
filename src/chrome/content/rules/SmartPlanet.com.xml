@@ -1,4 +1,8 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://smartplanet.com/ => https://smartplanet.com/: (51, "SSL: no alternative certificate subject name matches target host name 'smartplanet.com'")
+
 	For problematic rules, see SmartPlanet.com-problematic.xml.
 
 	For other CBS coverage, see CBS.xml.
@@ -23,7 +27,7 @@
 	* Secured by us
 
 -->
-<ruleset name="SmartPlanet.com (partial)">
+<ruleset name="SmartPlanet.com (partial)" default_off='failed ruleset test'>
 
 	<target host="smartplanet.com" />
 	<target host="secure.smartplanet.com" />

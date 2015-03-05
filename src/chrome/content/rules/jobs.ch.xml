@@ -1,4 +1,10 @@
-<ruleset name="jobs.ch">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://jobcloud.ch/ => http://jobcloud.ch/: (28, 'Connection timed out after 10000 milliseconds')
+
+-->
+<ruleset name="jobs.ch" default_off='failed ruleset test'>
 	<target host="jobs.ch"/>
 	<target host="*.jobs.ch"/>
 	<target host="jobcloud.ch"/>

@@ -1,8 +1,12 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://internet.org.nz/ => https://internet.org.nz/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+
 	Internet Party
 
 -->
-<ruleset name="Internet.org.nz">
+<ruleset name="Internet.org.nz" default_off='failed ruleset test'>
 
 	<target host="internet.org.nz" />
 	<target host="*.internet.org.nz" />

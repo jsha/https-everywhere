@@ -1,10 +1,14 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://medleyads.com/ => https://secure.medleyads.com/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+
 	Problematic subdomains:
 
 		- (www.)	(mismatched, CN: secure.medleyads.com)
 
 -->
-<ruleset name="medleyads.com">
+<ruleset name="medleyads.com" default_off='failed ruleset test'>
 
 	<target host="medleyads.com" />
 	<target host="*.medleyads.com" />

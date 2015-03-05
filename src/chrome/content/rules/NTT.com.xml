@@ -1,4 +1,8 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Non-2xx HTTP code: http://ntt.com/ (200) => https://www.ntt.com/ (403)
+
 	^: cert only matches www
 
 
@@ -9,7 +13,7 @@
 	* Secured by us
 
 -->
-<ruleset name="NTT.com">
+<ruleset name="NTT.com" default_off='failed ruleset test'>
 
 	<target host="ntt.com" />
 	<target host="*.ntt.com" />

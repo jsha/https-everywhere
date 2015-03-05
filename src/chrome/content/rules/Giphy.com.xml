@@ -1,4 +1,11 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://media.giphy.com/ => https://media.giphy.com/: 'NoneType' object has no attribute 'xpath'
+Fetch error: http://media1.giphy.com/ => https://media1.giphy.com/: 'NoneType' object has no attribute 'xpath'
+Fetch error: http://media4.giphy.com/ => https://media4.giphy.com/: 'NoneType' object has no attribute 'xpath'
+Fetch error: http://media10.giphy.com/ => https://d16jfyletng9p5.cloudfront.net/: 'NoneType' object has no attribute 'xpath'
+
 	CDN buckets:
 
 		- d16jfyletng9p5.cloudfront.net
@@ -33,7 +40,7 @@
 	* Secured by us
 
 -->
-<ruleset name="Giphy.com">
+<ruleset name="Giphy.com" default_off='failed ruleset test'>
 
 	<target host="giphy.com" />
 	<target host="*.giphy.com" />

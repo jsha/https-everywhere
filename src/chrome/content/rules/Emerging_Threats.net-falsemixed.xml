@@ -1,8 +1,12 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://emergingthreats.net/ => https://emergingthreats.net/: (7, 'Failed to connect to emergingthreats.net port 443: Connection refused')
+
 	For rules not causing false/broken MCB, see Emerging_Threats.net.xml.
 
 -->
-<ruleset name="Emerging Threats.net (false MCB)" platform="mixedcontent">
+<ruleset name="Emerging Threats.net (false MCB)" platform="mixedcontent" default_off='failed ruleset test'>
 
 	<target host="emergingthreats.net" />
 

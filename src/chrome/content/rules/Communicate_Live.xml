@@ -1,4 +1,11 @@
-<ruleset name="Communicate Live">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://communicatelive.co.uk/ => https://communicatelive.co.uk/: (60, 'SSL certificate problem: certificate has expired')
+Fetch error: http://www.communicatelive.co.uk/ => https://www.communicatelive.co.uk/: (60, 'SSL certificate problem: certificate has expired')
+
+-->
+<ruleset name="Communicate Live" default_off='failed ruleset test'>
 
 	<target host="communicatelive.co.uk" />
 	<target host="www.communicatelive.co.uk" />

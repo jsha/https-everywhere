@@ -1,3 +1,9 @@
+
+<!--
+Disabled by https-everywhere-checker because:
+Non-2xx HTTP code: http://b-i.forbesimg.com/ (200) => https://a248.e.akamai.net/f/1621/3914/8d/b-i.forbesimg.com/ (503)
+
+-->
  <!--
 	For other Forbes coverage, see Forbes.com.xml.
 
@@ -27,7 +33,7 @@
 		- b-i	(→ a248.e.akamai.net)
 
 -->
-<ruleset name="Forbes img.com (partial)">
+<ruleset name="Forbes img.com (partial)" default_off='failed ruleset test'>
 
 	<target host="b-i.forbesimg.com" />
 

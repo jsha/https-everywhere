@@ -1,8 +1,12 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://static1.bentasker.co.uk/ => https://static1.bentasker.co.uk/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+
 	^: Shows default page
 
 -->
-<ruleset name="BenTasker.co.uk">
+<ruleset name="BenTasker.co.uk" default_off='failed ruleset test'>
 
 	<target host="bentasker.co.uk" />
 	<target host="static1.bentasker.co.uk" />

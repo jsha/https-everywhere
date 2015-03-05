@@ -1,4 +1,11 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://salsacommons.org/ => https://www.salsalabs.com/commons: (28, 'Connection timed out after 10000 milliseconds')
+Fetch error: http://www.salsacommons.org/ => https://www.salsalabs.com/commons: (28, 'Connection timed out after 10000 milliseconds')
+Fetch error: http://salsalabs.com/ => https://salsalabs.com/: (28, 'Connection timed out after 10000 milliseconds')
+Fetch error: http://wiredforchange.com/ => https://wiredforchange.com/: (28, 'Connection timed out after 10000 milliseconds')
+
 	CDN buckets:
 
 		- dp-prod-sli-01.s3.amazonaws.com
@@ -51,7 +58,7 @@
 	* Secured by us
 
 -->
-<ruleset name="Salsa Labs">
+<ruleset name="Salsa Labs" default_off='failed ruleset test'>
 
 	<target host="salsacommons.org" />
 	<target host="www.salsacommons.org" />

@@ -1,4 +1,8 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://savannah.gnu.org/ => https://savannah.gnu.org/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+
 	For other Free Software Foundation coverage, see FSF.xml.
 
 
@@ -50,7 +54,7 @@
 		- www.gcc.gnu.org
 
 -->
-<ruleset name="GNU.org (partial)">
+<ruleset name="GNU.org (partial)" default_off='failed ruleset test'>
 
 	<target host=            "gnu.org" />
 	<target host="audio-video.gnu.org" />

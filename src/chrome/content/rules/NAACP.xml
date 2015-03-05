@@ -1,4 +1,8 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://naacp.org/ => https://donate.naacp.org/: (28, 'Operation timed out after 15002 milliseconds with 0 bytes received')
+
 	Other NAACP rulestets:
 
 		- NAACP_Company_Store.xml
@@ -10,7 +14,7 @@
 		- (www.)	(mismatched, CN: donate.naacp.org)
 
 -->
-<ruleset name="NAACP">
+<ruleset name="NAACP" default_off='failed ruleset test'>
 
 	<target host="naacp.org" />
 	<target host="*.naacp.org" />

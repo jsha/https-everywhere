@@ -1,4 +1,9 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://wpstartbox.com/ => http://wpstartbox.com/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+Fetch error: http://www.wpstartbox.com/ => http://www.wpstartbox.com/: (28, 'Connection timed out after 10000 milliseconds')
+
 	Nonfunctional subdomains:
 
 		- docs		(no https)
@@ -7,7 +12,7 @@
 	Some pages redirect to http.
 
 -->
-<ruleset name="StartBox (partial)">
+<ruleset name="StartBox (partial)" default_off='failed ruleset test'>
 
 	<target host="wpstartbox.com" />
 	<target host="www.wpstartbox.com" />

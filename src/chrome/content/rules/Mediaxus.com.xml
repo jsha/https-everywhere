@@ -1,4 +1,10 @@
-<ruleset name="Mediaxus.com">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://mediaxus.com/ => https://mediaxus.com/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+
+-->
+<ruleset name="Mediaxus.com" default_off='failed ruleset test'>
 
 	<target host="mediaxus.com" />
 	<target host="*.mediaxus.com" />

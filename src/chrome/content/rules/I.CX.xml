@@ -1,4 +1,11 @@
-<ruleset name="I.CX">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://i.cx/ => https://i.cx/: (28, 'Connection timed out after 10000 milliseconds')
+Fetch error: http://www.i.cx/ => https://www.i.cx/: (28, 'Connection timed out after 10000 milliseconds')
+
+-->
+<ruleset name="I.CX" default_off='failed ruleset test'>
 
 	<target host="i.cx" />
 	<target host="www.i.cx" />

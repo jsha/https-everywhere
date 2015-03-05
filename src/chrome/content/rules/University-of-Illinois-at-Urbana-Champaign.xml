@@ -1,4 +1,8 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://illinoislawreview.org/ => https://illinoislawreview.org/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+
 	Nonfunctional domains:
 
 		-  illinois.edu subdomains:
@@ -134,7 +138,7 @@
 	There is much, much more to add.
 
 -->
-<ruleset name="University of Illinois at Urban-Champaign (partial)" platform="mixedcontent">
+<ruleset name="University of Illinois at Urban-Champaign (partial)" platform="mixedcontent" default_off='failed ruleset test'>
 
 	<target host="illinois.edu" />
 	<target host="*.illinois.edu" />

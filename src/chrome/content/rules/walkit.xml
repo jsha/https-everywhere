@@ -1,4 +1,11 @@
-<ruleset name="walkit.com" platform="mixedcontent">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://walkit.com/ => https://walkit.com/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+Fetch error: http://www.walkit.com/ => https://walkit.com/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+
+-->
+<ruleset name="walkit.com" platform="mixedcontent" default_off='failed ruleset test'>
 
   <target host="walkit.com" />
   <target host="www.walkit.com" />

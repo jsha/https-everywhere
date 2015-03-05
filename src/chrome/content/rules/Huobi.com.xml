@@ -1,4 +1,8 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://www.huobi.com/ => https://www.huobi.com/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+
 	Fully covered subdomains:
 
 		- (www.)?
@@ -34,7 +38,7 @@
 
 	* Secured by us
 -->
-<ruleset name="huobi.com">
+<ruleset name="huobi.com" default_off='failed ruleset test'>
 
 	<target host="huobi.com" />
 	<target host="api.huobi.com" />

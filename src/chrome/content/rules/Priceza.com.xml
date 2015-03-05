@@ -1,4 +1,10 @@
-<ruleset name="Priceza.com">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://www.priceza.com/ => https://www.priceza.com/: (28, 'Operation timed out after 15000 milliseconds with 125774 bytes received')
+
+-->
+<ruleset name="Priceza.com" default_off='failed ruleset test'>
   <target host="priceza.com" />
   <target host="www.priceza.com" />
 

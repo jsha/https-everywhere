@@ -1,8 +1,12 @@
+
 <!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://www.orxrdr.com/ => https://www.orxrdr.com/: (28, 'Operation timed out after 15001 milliseconds with 0 bytes received')
+
 	^orxrdr.com does not exist.
 
 -->
-<ruleset name="orxrdr.com">
+<ruleset name="orxrdr.com" default_off='failed ruleset test'>
 
 	<target host="www.orxrdr.com" />
 

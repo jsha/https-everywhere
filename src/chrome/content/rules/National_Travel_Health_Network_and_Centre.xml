@@ -1,4 +1,10 @@
-<ruleset name="National Travel Health Network and Centre (NaTHNaC)">
+
+<!--
+Disabled by https-everywhere-checker because:
+Fetch error: http://nathnac.org/ => https://www.nathnac.org/: (60, 'SSL certificate problem: unable to get local issuer certificate')
+
+-->
+<ruleset name="National Travel Health Network and Centre (NaTHNaC)" default_off='failed ruleset test'>
     <target host="nathnac.org" />
     <target host="*.nathnac.org" />
 
