@@ -1,8 +1,9 @@
 <!--
+	Disabled per https://github.com/EFForg/https-everywhere/issues/1287
 	At least some pages redirect to http
 
 -->
-<ruleset name="GameStop">
+<ruleset name="GameStop" default_off="Breaks site">
 
 	<target host="gamestop.com" />
 	<target host="*.gamestop.com" />
