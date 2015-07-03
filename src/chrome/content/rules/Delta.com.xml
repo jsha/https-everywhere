@@ -1,0 +1,6 @@
+<ruleset name="Delta Air Lines, Inc.">
+  <target host="delta.com" />
+  <target host="*.delta.com" />
+
+  <rule from="^http:" to="https:" />
+</ruleset>
