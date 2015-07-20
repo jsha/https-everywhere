@@ -24,6 +24,12 @@
 	<target host="libreoffice.org" />
 	<target host="*.libreoffice.org" />
 
+	<exclusion pattern="http://(ask|api|dev-builds|tinderbox)\.libreoffice\.org/" />
+	<test url="http://ask.libreoffice.org/" />
+	<test url="http://api.libreoffice.org/" />
+	<test url="http://dev-builds.libreoffice.org/" />
+	<test url="http://tinderbox.libreoffice.org/" />
+
 	<test url="http://www.libreoffice.org/" />
 	<test url="http://bg.libreoffice.org/" />
 	<test url="http://brx.libreoffice.org/" />
