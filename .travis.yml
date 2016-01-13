@@ -16,8 +16,7 @@ addons:
       - python-lxml
       - python-software-properties
       - chromium-browser
-  firefox:
-    - "latest-esr"
+  firefox: "latest-esr"
 virtualenv:
   system_site_packages: true
 install:
