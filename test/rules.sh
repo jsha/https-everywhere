@@ -43,3 +43,14 @@ EOF
 else
   exit 0
 fi
+
+# On Travis, diff against master and fetch-test the changed rulesets.
+if [ -n "${TRAVIS}" ]; then
+  git fetch origin master
+  git branch master FETCH_HEAD
+  LIST=$(mktemp)
+  git diff master --name-only -- "src/chrome/content/rules/*.xml" > ${LIST}
+  if [ -s "${LIST}" ]; then
+    ls "${LIST}" | xargs ./fetch-test.sh
+  fi
+fi
