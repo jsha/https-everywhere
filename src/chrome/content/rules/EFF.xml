@@ -24,7 +24,7 @@
 	<target host="www.globalchokepoints.org" />
 	<target host="httpsnow.org" />
 	<target host="www.httpsnow.org" />
-	<target host="ripmixmake.org" />
+	<target host="asdfripmixmake.org" />
 	<target host="www.ripmixmake.org" />
 
 	<test url="http://www.eff.org/" />
