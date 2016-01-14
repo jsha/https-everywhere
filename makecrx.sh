@@ -56,7 +56,7 @@ sed -e "s/VERSION/$VERSION/g" chromium/updates-master.xml > chromium/updates.xml
 
 mkdir -p pkg/crx/rules
 cd pkg/crx
-cp -a ../../chromium/* .
+rsync -aL ../../chromium/ ./
 do_not_ship="*.py *.xml icon.jpg"
 rm -f $do_not_ship
 cd ../..

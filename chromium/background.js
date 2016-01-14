@@ -54,6 +54,12 @@ chrome.storage.onChanged.addListener(function(changes, areaName) {
     }
   }
 });
+chrome.tabs.onActivated.addListener(function() {
+  setIconColor();
+});
+chrome.webNavigation.onCompleted.addListener(function() {
+  setIconColor();
+});
 
 /**
 * Load stored user rules
@@ -84,26 +90,33 @@ loadStoredUserRules();
 
 /**
  * Set the icon color correctly
- * Depending on http-nowhere it should be red/default
+ * inactive: extension is enabled, but no rules were triggered on this page.
+ * blocking: extension is in "block all HTTP requests" mode.
+ * active: extension is enabled and rewrote URLs on this page.
  */
 var setIconColor = function() {
-  var newIconPath = httpNowhereOn ? './icon38-red.png' : './icon38.png';
-  chrome.browserAction.setIcon({
-    path: newIconPath
+  chrome.tabs.query({active: true}, function(tabs) {
+    if (!tabs || tabs.length === 0) {
+      return;
+    }
+    var applied = activeRulesets.getRulesets(tabs[0].id)
+    var newIcon = {
+      "38": "icons/icon-inactive-38.png",
+    };
+    if (httpNowhereOn) {
+      newIcon = {
+        "38": "icons/icon-blocking-38.png",
+      };
+    } else if (applied) {
+      newIcon = {
+        "38": "icons/icon-active-38.png",
+      };
+    }
+    chrome.browserAction.setIcon({
+      path: newIcon
+    });
   });
-};
-
-/*
-for (var v in localStorage) {
-  log(DBUG, "localStorage["+v+"]: "+localStorage[v]);
 }
-
-var rs = all_rules.potentiallyApplicableRulesets("www.google.com");
-for (r in rs) {
-  log(DBUG, rs[r].name +": "+ rs[r].active);
-  log(DBUG, rs[r].name +": "+ rs[r].default_state);
-}
-*/
 
 /**
  * Adds a new user rule

@@ -81,11 +81,8 @@ httpsEverywhere.toolbarButton = {
                                  showHttpNowhere ? 'true' : 'false');
     }
 
-    // make sure UI is set depending on whether HTTPS-E is enabled
-    toggleEnabledUI();
-
-    // show ruleset counter when a tab is changed
-    tb.updateRulesetsApplied();
+    // Make icon state match current status and tab.
+    tb.updateIconState();
 
     // There is no gBrowser object on Android. Instead Android uses the
     // window.BrowserApp object:
@@ -93,7 +90,7 @@ httpsEverywhere.toolbarButton = {
     if (gBrowser) {
       gBrowser.tabContainer.addEventListener(
         'TabSelect',
-        tb.updateRulesetsApplied,
+        tb.updateIconState,
         false
       );
 
@@ -108,7 +105,7 @@ httpsEverywhere.toolbarButton = {
               (aFlags & CI.nsIWebProgressListener.STATE_STOP) &&
               aWebProgress.isTopLevel) {
             HTTPSEverywhere.log(DBUG, "Got on state change");
-            tb.updateRulesetsApplied();
+            tb.updateIconState();
           }
         }
       };
@@ -167,18 +164,15 @@ httpsEverywhere.toolbarButton = {
   /**
    * Update the rulesets applied counter for the current tab.
    */
-  updateRulesetsApplied: function() {
+  updateIconState: function() {
     var toolbarbutton = document.getElementById('https-everywhere-button');
     if (!toolbarbutton) {
       return;
     }
 
     var enabled = HTTPSEverywhere.prefs.getBoolPref("globalEnabled");
+    var blocking = httpsEverywhere.toolbarButton.shouldShowHttpNowhere();
     var showCounter = httpsEverywhere.toolbarButton.shouldShowCounter();
-    if (!enabled || !showCounter) { 
-      toolbarbutton.setAttribute('rulesetsApplied', 0);
-      return;
-    }
 
     var browser = httpsEverywhere.toolbarButton.selectedBrowser();
     if (!browser) {
@@ -199,8 +193,26 @@ httpsEverywhere.toolbarButton = {
       }
     }
 
-    toolbarbutton.setAttribute('rulesetsApplied', counter);
-    HTTPSEverywhere.log(INFO, 'Setting icon counter to: ' + counter);
+    // inactive: extension is enabled, but no rules were triggered on this page.
+    // active: extension is enabled and rewrote URLs on this page.
+    // blocking: extension is in "block all HTTP requests" mode.
+    // disabled: extension is disabled.
+    var iconState = 'inactive';
+    if (!enabled) {
+      iconState = 'disabled';
+    } else if (blocking) {
+      iconState = 'blocking';
+    } else if (counter) {
+      iconState = 'active';
+    }
+    toolbarbutton.setAttribute('state', iconState);
+    if (!showCounter) {
+      toolbarbutton.setAttribute('rulesetsApplied', 0);
+    } else {
+      toolbarbutton.setAttribute('rulesetsApplied', counter);
+    }
+
+    HTTPSEverywhere.log(INFO, 'Setting icon state to: ' + iconState + '[' + counter + ']');
   },
 
   /**
@@ -214,9 +226,9 @@ httpsEverywhere.toolbarButton = {
 
     var prefExists = sp.getPrefType(tb.COUNTER_PREF);
 
-    // the default behavior is to show the rulesets applied counter.
-    // if no preference exists (default) or its enabled, show the counter
-    return !prefExists || sp.getBoolPref(tb.COUNTER_PREF);
+    // the default behavior is to not the rulesets applied counter.
+    // if no preference exists and is enabled, show the counter
+    return prefExists && sp.getBoolPref(tb.COUNTER_PREF);
   },
 
   /**
@@ -241,7 +253,7 @@ httpsEverywhere.toolbarButton = {
     var showCounter = tb.shouldShowCounter();
     sp.setBoolPref(tb.COUNTER_PREF, !showCounter);
 
-    tb.updateRulesetsApplied();
+    tb.updateIconState();
   },
 
   /**
@@ -249,13 +261,6 @@ httpsEverywhere.toolbarButton = {
    */
   toggleHttpNowhere: function() {
     HTTPSEverywhere.toggleHttpNowhere();
-    var tb = httpsEverywhere.toolbarButton;
-    var showHttpNowhere = tb.shouldShowHttpNowhere();
-
-    // Change icon color to red if HTTP nowhere is enabled
-    var toolbarbutton = document.getElementById('https-everywhere-button');
-    toolbarbutton.setAttribute('http_nowhere',
-                               showHttpNowhere ? 'true' : 'false');
     reload_window();
   },
 
@@ -373,11 +378,7 @@ function toggleEnabledUI() {
     items[i].hidden = !enabled;
   }
 
-  // Change icon depending on enabled state
-  var toolbarbutton = document.getElementById('https-everywhere-button');
-  if (toolbarbutton) {
-    toolbarbutton.setAttribute('status', enabled ? 'enabled' : 'disabled');
-  }
+  httpsEverywhere.toolbarButton.updateIconState();
 }
 
 function open_in_tab(url) {
