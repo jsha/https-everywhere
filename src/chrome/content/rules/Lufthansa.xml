@@ -6,6 +6,5 @@
 
     <rule from="^http://lufthansa\.com/"
         to="https://www.lufthansa.com/" />
-    <rule from="^http://([^/:@]+)?\.lufthansa\.com/"
-        to="https://$1.lufthansa.com/" />
+    <rule from="^http:" to="https:" />
 </ruleset>

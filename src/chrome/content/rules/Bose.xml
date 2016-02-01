@@ -6,6 +6,6 @@
 
     <rule from="^http://bose\.co\.uk/"
         to="https://www.bose.co.uk/" />
-    <rule from="^http://([^/:@]+)\.bose\.co\.uk/"
-        to="https://$1.bose.co.uk/" />
+    <rule from="^http:"
+        to="https:" />
 </ruleset>

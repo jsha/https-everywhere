@@ -29,7 +29,7 @@
 	<securecookie host="^(?:.*\.)?atlantic\.net$" name=".+" />
 
 
-	<rule from="^http://([^/:@]+\.)?atlantic\.net/"
-		to="https://$1atlantic.net/" />
+	<rule from="^http:"
+		to="https:" />
 
 </ruleset>

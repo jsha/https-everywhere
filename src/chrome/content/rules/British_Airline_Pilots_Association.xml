@@ -4,6 +4,5 @@
 
     <rule from="^http://balpa\.org/"
         to="https://www.balpa.org/"/>
-    <rule from="^http://([^/:@]+)?\.balpa\.org/"
-        to="https://$1.balpa.org/" />
+    <rule from="^http:" to="https:" />
 </ruleset>

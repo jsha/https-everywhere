@@ -6,6 +6,5 @@
 
     <rule from="^http://ch\.ch/"
         to="https://www.ch.ch/" />
-    <rule from="^http://([^/:@]+)?\.ch\.ch/"
-        to="https://$1.ch.ch/" />
+    <rule from="^http:" to="https:" />
 </ruleset>

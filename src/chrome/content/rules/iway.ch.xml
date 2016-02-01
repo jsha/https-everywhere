@@ -15,6 +15,5 @@
 
     <rule from="^http://iway\.ch/"
         to="https://www.iway.ch/"/>
-    <rule from="^http://([^/:@]+)?\.iway\.ch/"
-        to="https://$1.iway.ch/" />
+    <rule from="^http:" to="https:" />
 </ruleset>

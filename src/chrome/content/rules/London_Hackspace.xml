@@ -2,8 +2,5 @@
     <target host="london.hackspace.org.uk" />
     <target host="*.london.hackspace.org.uk" />
 
-    <rule from="^http://london\.hackspace\.org\.uk/"
-        to="https://london.hackspace.org.uk/"/>
-    <rule from="^http://([^/:@]+)?\.london\.hackspace\.org\.uk/"
-        to="https://$1.london.hackspace.org.uk/" />
+    <rule from="^http:" to="https:" />
 </ruleset>

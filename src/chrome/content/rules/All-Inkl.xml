@@ -17,7 +17,7 @@
 	<rule from="^http://(?:www\.)?all-inkl\.\w\w/"
 		to="https://all-inkl.com/" />
 
-	<rule from="^http://([^/:@.]+\.)?all-inkl\.com/"
-		to="https://$1all-inkl.com/" />
+	<rule from="^http:"
+		to="https:" />
 
 </ruleset>

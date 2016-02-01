@@ -6,6 +6,6 @@
 
     <rule from="^http://cic\.fr/"
         to="https://www.cic.fr/"/>
-    <rule from="^http://([^/:@]+)?\.cic\.fr/"
-        to="https://$1.cic.fr/" />
+    <rule from="^http:"
+        to="https:" />
 </ruleset>

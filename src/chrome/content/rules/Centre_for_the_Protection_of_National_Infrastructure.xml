@@ -10,6 +10,5 @@ Fetch error: http://cpni.gov.uk/ => https://www.cpni.gov.uk/: (6, 'Could not res
 
     <rule from="^http://cpni\.gov\.uk/"
         to="https://www.cpni.gov.uk/" />
-    <rule from="^http://([^/:@]+)?\.cpni\.gov\.uk/"
-        to="https://$1.cpni.gov.uk/" />
+    <rule from="^http:" to="https:" />
 </ruleset>

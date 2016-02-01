@@ -4,6 +4,5 @@
 
     <rule from="^http://coverforyou\.com/"
         to="https://www.coverforyou.com/"/>
-    <rule from="^http://([^/:@]+)?\.coverforyou\.com/"
-        to="https://$1.coverforyou.com/" />
+    <rule from="^http:" to="https:" />
 </ruleset>

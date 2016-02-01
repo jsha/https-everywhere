@@ -10,6 +10,5 @@ Fetch error: http://buerger-cert.de/ => https://www.buerger-cert.de/: (6, 'Could
 
     <rule from="^http://buerger-cert\.de/"
         to="https://www.buerger-cert.de/" />
-    <rule from="^http://([^/:@]+)?\.buerger-cert\.de/"
-        to="https://$1.buerger-cert.de/" />
+    <rule from="^http:" to="https:" />
 </ruleset>

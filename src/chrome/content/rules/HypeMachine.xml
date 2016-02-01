@@ -34,8 +34,7 @@
 	<!--securecookie host="^([^/:@]+\.)?hypem\.com$" name=".+" /-->
 
 
-	<rule from="^http://([^/:@]+\.)?hypem\.com/"
-		to="https://$1hypem.com/" />
+	<rule from="^http:" to="https:" />
 
 	<rule from="^http://static-ak\.hypem\.net/"
 		to="https://static.hypem.com/" />

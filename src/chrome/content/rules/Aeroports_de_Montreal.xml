@@ -8,6 +8,6 @@ Fetch error: http://admtl.com/ => https://www.admtl.com/: (60, 'SSL certificate 
 
     <rule from="^http://admtl\.com/"
         to="https://www.admtl.com/"/>
-    <rule from="^http://([^/:@]+)?\.admtl\.com/"
-        to="https://$1.admtl.com/" />
+    <rule from="^http:"
+        to="https:" />
 </ruleset>

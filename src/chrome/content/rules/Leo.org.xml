@@ -24,10 +24,9 @@
 		<exclusion pattern="http://bar\.leo\.org/" />
 
 
-	<rule from="^http://(?:www\.)?leo\.org/"
+	<rule from="^http://leo\.org/"
 		to="https://www.leo.org/" />
 
-	<rule from="^http://([^/:@]+)\.leo\.org/"
-		to="https://$1.leo.org/" />
+	<rule from="^http:" to="https:" />
 
 </ruleset>

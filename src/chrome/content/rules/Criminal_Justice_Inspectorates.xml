@@ -10,6 +10,5 @@ Fetch error: http://justiceinspectorates.gov.uk/ => https://www.justiceinspector
 
     <rule from="^http://justiceinspectorates\.gov\.uk/"
         to="https://www.justiceinspectorates.gov.uk/" />
-    <rule from="^http://([^/:@]+)\.justiceinspectorates\.gov\.uk/"
-        to="https://$1.justiceinspectorates.gov.uk/" />
+    <rule from="^http:" to="https:" />
 </ruleset>

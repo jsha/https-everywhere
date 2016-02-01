@@ -10,11 +10,6 @@ Fetch error: http://boingo.com/ => https://www.boingo.com/: (7, 'Failed to conne
 
     <rule from="^http://boingo\.com/"
         to="https://www.boingo.com/" />
-    <rule from="^http://([^/:@]+)?\.boingo\.com/"
-        to="https://$1.boingo.com/" />
-
-    <rule from="^http://boingo\.net/"
-        to="https://www.boingo.net/" />
-    <rule from="^http://([^/:@]+)?\.boingohotspot\.net/"
-        to="https://$1.boingohotspot.net/" />
+    <rule from="^http:"
+        to="https:" />
 </ruleset>

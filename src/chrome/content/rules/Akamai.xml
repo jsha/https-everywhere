@@ -90,7 +90,7 @@
 	<!--	Just use an URL from the ak1.abmr.net rule below	-->
 	<test url="http://ak1s.abmr.net/is/pixel.mathtag.com?U=/sync/js&amp;V=3-Z%2fH%2fr0WN0ZYjakDDxKo0khM8NMHcJc8atNMBjTJyWU5qDSjB7759WA%3d%3d&amp;I=E33624F6D7AF512&amp;D=mathtag.com&amp;01AD=1&amp;sync=auto&amp;mt_lim=5" />
 
-	<rule from="^http://([^@:/\.]+)\.akamaihd\.net/"
+	<rule from="^http://([\w-]+)\.akamaihd\.net/"
 		to="https://$1.akamaihd.net/" />
 	<!--	Facebook favicon, random dog picture	-->
 	<test url="http://fbstatic-a.akamaihd.net/rsrc.php/yl/r/H3nktOa7ZMg.ico" />

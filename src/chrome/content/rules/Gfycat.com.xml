@@ -14,10 +14,9 @@
 	<target host="*.gfycat.com" />
 
 
-	<securecookie host="^\.gfycat\.com$" name=".+" />
+	<securecookie host=".+" name=".+" />
 
 
-	<rule from="^http://([^/:@\.]+\.)?gfycat\.com/"
-		to="https://$1gfycat.com/" />
+	<rule from="^http:" to="https:" />
 
 </ruleset>

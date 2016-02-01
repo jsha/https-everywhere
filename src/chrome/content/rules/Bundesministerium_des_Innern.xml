@@ -6,6 +6,5 @@
 
     <rule from="^http://bmi\.bund\.de/"
         to="https://www.bmi.bund.de/" />
-    <rule from="^http://([^/:@]+)?\.bmi\.bund\.de/"
-        to="https://$1.bmi.bund.de/" />
+    <rule from="^http:" to="https:" />
 </ruleset>

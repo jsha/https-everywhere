@@ -17,7 +17,6 @@
 	<securecookie host="^[\w\-]+\.herokuapp\.com$" name=".*" />
 
 
-	<rule from="^http://([^/:@\.]+\.)?heroku(app)?\.com/"
-		to="https://$1heroku$2.com/" />
+	<rule from="^http:" to="https:" />
 
 </ruleset>

@@ -9,5 +9,5 @@ Fetch error: http://boe.es/ => https://www.boe.es/: (35, 'Unknown SSL protocol e
   <target host="*.boe.es" />
 
   <rule from="^http://boe\.es/" to="https://www.boe.es/"/>
-  <rule from="^http://([^/:@\.]+)\.boe\.es/" to="https://$1.boe.es/"/>
+  <rule from="^http:" to="https:" />
 </ruleset>

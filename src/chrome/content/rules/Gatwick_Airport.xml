@@ -4,6 +4,5 @@
 
     <rule from="^http://gatwickairport\.com/"
         to="https://www.gatwickairport.com/"/>
-    <rule from="^http://([^/:@]+)?\.gatwickairport\.com/"
-        to="https://$1.gatwickairport.com/" />
+    <rule from="^http:" to="https:" />
 </ruleset>

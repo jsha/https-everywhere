@@ -34,7 +34,6 @@
 	<rule from="^http://status\.gitorious\.org/"
 		to="https://gitorious-status.herokuapp.com/" />
 
-	<rule from="^http://([^/:@\.]+\.)?gitorious\.org/"
-		to="https://$1gitorious.org/" />
+	<rule from="^http:" to="https:" />
 
 </ruleset>

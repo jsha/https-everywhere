@@ -10,8 +10,5 @@
         to="https://www.ing.com/" />
     <rule from="^http://ing\.nl/"
         to="https://www.ing.nl/" />
-    <rule from="^http://([^/:@]+)\.ing\.com/"
-        to="https://$1.ing.com/" />
-    <rule from="^http://([^/:@]+)\.ing\.nl/"
-        to="https://$1.ing.nl/" />
+    <rule from="^http:" to="https:" />
 </ruleset>

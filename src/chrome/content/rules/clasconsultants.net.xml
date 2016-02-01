@@ -6,10 +6,9 @@ Fetch error: http://clasconsultants.net/ => https://www.clasconsultants.net/: (6
     <target host="clasconsultants.net" />
     <target host="*.clasconsultants.net" />
 
-    <securecookie host="^(?:.*\.)?clasconsultants\.net$" name=".+" />
+    <securecookie host=".+" name=".+" />
 
     <rule from="^http://clasconsultants\.net/"
         to="https://www.clasconsultants.net/" />
-    <rule from="^http://([^/:@]+)?\.clasconsultants\.net/"
-        to="https://$1.clasconsultants.net/" />
+    <rule from="^http:" to="https:" />
 </ruleset>

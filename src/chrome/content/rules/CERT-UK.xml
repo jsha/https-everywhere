@@ -6,10 +6,9 @@ Fetch error: http://cert.gov.uk/ => https://www.cert.gov.uk/: (6, 'Could not res
     <target host="cert.gov.uk" />
     <target host="*.cert.gov.uk" />
 
-    <securecookie host="^(?:.*\.)?cert\.gov\.uk$" name=".+" />
+    <securecookie host=".+" name=".+" />
 
     <rule from="^http://cert\.gov\.uk/"
         to="https://www.cert.gov.uk/" />
-    <rule from="^http://([^/:@]+)?\.cert\.gov\.uk/"
-        to="https://$1.cert.gov.uk/" />
+    <rule from="^http:" to="https:" />
 </ruleset>

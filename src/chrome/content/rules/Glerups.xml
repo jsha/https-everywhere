@@ -4,6 +4,5 @@
 
     <rule from="^http://glerups\.dk/"
         to="https://www.glerups.dk/" />
-    <rule from="^http://([^/:@]+)\.glerups\.dk/"
-        to="https://$1.glerups.dk/" />
+    <rule from="^http:" to="https:" />
 </ruleset>

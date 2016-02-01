@@ -4,6 +4,5 @@
 
     <rule from="^http://verfassungsschutz\.de/"
         to="https://www.verfassungsschutz.de/" />
-    <rule from="^http://([^/:@]+)?\.verfassungsschutz\.de/"
-        to="https://$1.verfassungsschutz.de/" />
+    <rule from="^http:" to="https:" />
 </ruleset>

@@ -14,6 +14,6 @@ Fetch error: http://www.boerse-frankfurt.de/ => https://www.boerse-frankfurt.de/
 
     <rule from="^http://boerse-frankfurt\.de/"
         to="https://www.boerse-frankfurt.de/" />
-    <rule from="^http://([^/:@]+)?\.boerse-frankfurt\.de/"
-        to="https://$1.boerse-frankfurt.de/" />
+    <rule from="^http:"
+        to="https:" />
 </ruleset>

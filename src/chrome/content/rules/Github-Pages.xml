@@ -5,7 +5,6 @@
 
 	<target host="*.github.io" />
 
-	<rule from="^http://([^/@:\.]+)\.github\.io/"
-		to="https://$1.github.io/" />
+	<rule from="^http:" to="https:" />
 
 </ruleset>

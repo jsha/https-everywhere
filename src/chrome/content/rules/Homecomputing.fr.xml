@@ -3,5 +3,5 @@
   <target host="*.homecomputing.fr" />
 
   <rule from="^http://homecomputing\.fr/" to="https://www.homecomputing.fr/"/>
-  <rule from="^http://([^@/:]*)\.homecomputing\.fr/" to="https://$1.homecomputing.fr/"/>
+  <rule from="^http:" to="https:" />
 </ruleset>

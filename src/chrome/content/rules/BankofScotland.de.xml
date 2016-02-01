@@ -3,5 +3,5 @@
   <target host="*.bankofscotland.de" />
 
   <rule from="^http://bankofscotland\.de/" to="https://www.bankofscotland.de/"/>
-  <rule from="^http://([^/:@]*)\.bankofscotland\.de/" to="https://$1.bankofscotland.de/"/>
+  <rule from="^http:" to="https:"/>
 </ruleset>

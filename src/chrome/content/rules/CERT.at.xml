@@ -6,6 +6,5 @@
 
     <rule from="^http://cert\.at/"
         to="https://www.cert.at/" />
-    <rule from="^http://([^/:@]+)?\.cert\.at/"
-        to="https://$1.cert.at/" />
+    <rule from="^http:" to="https:" />
 </ruleset>

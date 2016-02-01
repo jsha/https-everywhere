@@ -2,8 +2,7 @@
 
 	<target host="*.cloudfront.net" />
 
-	<rule from="^http://([^/:@\.]+)\.cloudfront\.net/" 
-		to="https://$1.cloudfront.net/" />
+	<rule from="^http:" to="https:" />
 
 	<!-- from src/chrome/content/rules/Guild-Wars-2.xml  -->
 	<test url="http://d15glo5zfrmw71.cloudfront.net/" />

@@ -4,6 +4,5 @@
 
     <rule from="^http://bundespolizei\.de/"
         to="https://www.bundespolizei.de/"/>
-    <rule from="^http://([^/:@]+)?\.bundespolizei\.de/"
-        to="https://$1.bundespolizei.de/" />
+    <rule from="^http:" to="https:" />
 </ruleset>

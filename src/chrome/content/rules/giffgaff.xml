@@ -2,8 +2,5 @@
     <target host="giffgaff.com" />
     <target host="community.giffgaff.com" />
 
-    <rule from="^http://giffgaff\.com/"
-        to="https://giffgaff.com/" />
-    <rule from="^http://([^/:@]+)\.giffgaff\.com/"
-        to="https://$1.giffgaff.com/" />
+    <rule from="^http:" to="https:" />
 </ruleset>

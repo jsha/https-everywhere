@@ -12,6 +12,6 @@ Fetch error: http://addisonlee.com/ => https://www.addisonlee.com/: Too many red
 
     <rule from="^http://addisonlee\.com/"
         to="https://www.addisonlee.com/"/>
-    <rule from="^http://([^/:@]+)?\.addisonlee\.com/"
-        to="https://$1.addisonlee.com/" />
+    <rule from="^http:"
+        to="https:" />
 </ruleset>

@@ -4,6 +4,6 @@
 
     <rule from="^http://axa-winterthur\.ch/"
         to="https://www.axa-winterthur.ch/"/>
-    <rule from="^http://([^/:@]+)?\.axa-winterthur\.ch/"
-        to="https://$1.axa-winterthur.ch/" />
+    <rule from="^http:"
+        to="https:" />
 </ruleset>

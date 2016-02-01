@@ -6,7 +6,7 @@
 	<securecookie host="^.+\.berlios\.de$" name=".*" />
 
 
-	<rule from="^http://([^/:@\.]+)\.berlios\.de/"
-		to="https://$1.berlios.de/" />
+	<rule from="^http:"
+		to="https:" />
 
 </ruleset>

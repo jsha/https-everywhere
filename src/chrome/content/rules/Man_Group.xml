@@ -2,10 +2,9 @@
     <target host="man.com" />
     <target host="*.man.com" />
 
-    <securecookie host="^(?:.*\.)?man\.com$" name=".+" />
+    <securecookie host=".+" name=".+" />
 
     <rule from="^http://man\.com/"
         to="https://www.man.com/" />
-    <rule from="^http://([^/:@]+)?\.man\.com/"
-        to="https://$1.man.com/" />
+    <rule from="^http:" to="https:" />
 </ruleset>

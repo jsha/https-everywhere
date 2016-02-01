@@ -12,7 +12,7 @@
 	<securecookie host="^(?:.*\.)?4shared\.com$" name=".*" />
 
 
-	<rule from="^http://([^/:@]*\.)?4shared\.com/"
-		to="https://$14shared.com/" />
+	<rule from="^http:"
+		to="https:" />
 
 </ruleset>

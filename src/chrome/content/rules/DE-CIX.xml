@@ -13,6 +13,6 @@
 
     <rule from="^http://de-cix\.net/"
         to="https://www.de-cix.net/" />
-    <rule from="^http://([^/:@]+)?\.de-cix\.net/"
-        to="https://$1.de-cix.net/" />
+    <rule from="^http:" to="https:" />
+
 </ruleset>

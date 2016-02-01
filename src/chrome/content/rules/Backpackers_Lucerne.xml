@@ -6,6 +6,6 @@
 
     <rule from="^http://backpackerslucerne\.ch/"
         to="https://www.backpackerslucerne.ch/" />
-    <rule from="^http://([^/:@]+)?\.backpackerslucerne\.ch/"
-        to="https://$1.backpackerslucerne.ch/" />
+    <rule from="^http:"
+        to="https:" />
 </ruleset>

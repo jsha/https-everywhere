@@ -6,10 +6,9 @@ Fetch error: http://drinkaware.co.uk/ => https://www.drinkaware.co.uk/: (28, 'Co
     <target host="drinkaware.co.uk" />
     <target host="*.drinkaware.co.uk" />
 
-    <securecookie host="^(?:.*\.)?drinkaware\.co\.uk$" name=".+" />
+    <securecookie host=".+" name=".+" />
 
     <rule from="^http://drinkaware\.co\.uk/"
         to="https://www.drinkaware.co.uk/" />
-    <rule from="^http://([^/:@]+)?\.drinkaware\.co\.uk/"
-        to="https://$1.drinkaware.co.uk/" />
+    <rule from="^http:" to="https:" />
 </ruleset>
