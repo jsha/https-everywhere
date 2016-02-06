@@ -35,20 +35,16 @@ const HTTPS = {
    *   (i.e. those that match on a hostname basis).
    * @param {nsIChannel} channel The channel to be manipulated.
    * @param {boolean} httpNowhereEnabled Whether to abort non-https requests.
-   * @returns null
+   * @returns {Promise<boolean>}
    */
   replaceChannel: function(applicable_list, channel, httpNowhereEnabled) {
     var that = this;
-    promise = HTTPSRules.rewrittenURI(applicable_list, channel.URI.clone())
-    // If we were able to answer the rewrite immediately, proceed with replacing
-    // the channel. Note: promise.done is not part of the Promise standard, but
-    // is specially set in rulesetsByTargets if it is able to return
-    // immediately.
-    if (promise.done) {
-      promise.then(function(newURI) {
-        this.finishReplaceChannel(applicable_list, channel, httpNowhereEnabled, newURI);
-      });
-      return null;
+    var resolved = false;
+    var rulesets = HTTPSRules.potentiallyApplicableRulesets(channel.URI.host);
+    // If the result is not a promise (i.e. does not have a 'then'), that means we were able to
+    // answer the rewrite immediately. Proceed with replacing the channel.
+    if (!rulesets.then) {
+      return this.finishReplaceChannel(applicable_list, channel, httpNowhereEnabled);
     } else {
       // If the promise isn't done yet, it's because we had to go asynchronous
       // while waiting on some disk I/O. Tell the channel to redirect to itself
@@ -58,17 +54,19 @@ const HTTPS = {
       try {
         channel.redirectTo(channel.URI);
       } catch (e) {
-        this.log(WARN, 'Failed to redirect to self ' + channel.URI.spec + ': ' + e);
-        return;
+        return new Promise(function(resolve, reject) {
+          reject('Failed to redirect to self ' + channel.URI.spec + ': ' + e);
+        });
       }
       try {
         channel.suspend();
       } catch (e) {
-        this.log(WARN, 'Failed to suspend ' + channel.URI.spec + ': ' + e);
-        return;
+        return new Promise(function(resolve, reject) {
+          reject('Failed to suspend ' + channel.URI.spec + ': ' + e);
+        });
       }
       this.log(DBUG, 'Succeeded suspending ' + channel.URI.spec);
-      promise.then(function() {
+      return rulesets.then(function() {
         // Now that we're in the callback, we know the rules are loaded. So we
         // tell the channel to go ahead and continue with the redirect-to-self.
         // That will trigger on-modify-request again, and we'll wind up here
@@ -77,6 +75,7 @@ const HTTPS = {
         // NS_ERROR_IN_PROGRESS.
         try {
           channel.resume();
+          return true;
         } catch (e) {
           that.log(WARN, 'Failed to resume ' + channel.URI.spec + ': ' + e);
           return;
@@ -86,7 +85,8 @@ const HTTPS = {
     }
   },
 
-  finishReplaceChannel: function(applicable_list, channel, httpNowhereEnabled, blob) {
+  finishReplaceChannel: function(applicable_list, channel, httpNowhereEnabled) {
+    var blob = HTTPSRules.rewrittenURI(applicable_list, channel.URI.clone());
     var that = this;
     var isSTS = securityService.isSecureURI(
         CI.nsISiteSecurityService.HEADER_HSTS, channel.URI, 0);

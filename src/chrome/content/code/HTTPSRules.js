@@ -143,13 +143,13 @@ RuleSet.prototype = {
     var urispec = uri.spec;
 
     this.ensureCompiled();
-
+ 
     if (this.ruleset_match_c && !this.ruleset_match_c.test(urispec)) 
       return false;
-
+ 
     for (var i = 0; i < this.exclusions.length; ++i) 
       if (this.exclusions[i].pattern_c.test(urispec)) return false;
-
+ 
     for (var i = 0; i < this.rules.length; ++i) 
       if (this.rules[i].from_c.test(urispec)) return true;
     return false;
@@ -392,7 +392,6 @@ const HTTPSRules = {
       this.rulesetsByID = {};
       this.rulesetsByName = {};
       this.targetsLoaded = false;
-      this.targetsLoadingCallbacks = [];
       this.checkMixedContentHandling();
       var rulefiles = RuleWriter.enumerate(RuleWriter.getCustomRuleDir());
       this.scanRulefiles(rulefiles);
@@ -407,17 +406,11 @@ const HTTPSRules = {
     return;
   },
 
-  loadTargets: function(callback) {
+  loadTargets: function() {
     if (this.targetsLoaded) {
-      callback();
-      return;
-    }
-    // loadTargets can be called multiple times before it resolves. We store a
-    // list of callbacks to call when done, and make sure we only actually do
-    // the query once.
-    this.targetsLoadingCallbacks.push(callback);
-    if (this.targetsLoadingCallbacks.length > 1) {
-      this.log(DBUG, "Skipping loadTargets, a query is already in progress.");
+      return new Promise(function(resolve, reject) {
+        resolve(null);
+      });
     }
     // Load the mapping of hostname target -> ruleset ID from DB.
     // This is a little slow (287 ms on a Core2 Duo @ 2.2GHz with SSD),
@@ -429,45 +422,41 @@ const HTTPSRules = {
     var that = this;
     var count = 0;
     this.log(INFO, "Querying targets");
-    // TODO: Store "this is pending" and resolve all pending once the whole
-    // thing is loaded.
-    query.executeAsync({
-      handleResult: function(aResultSet) {
-        try {
-        for (let row = aResultSet.getNextRow();
-             row;
-             row = aResultSet.getNextRow()) {
-          var host = row.getResultByName("host");
-          var id = row.getResultByName("ruleset_id");
-          count ++;
-          if (!that.targets[host]) {
-            that.targets[host] = [id];
+    return new Promise(function(resolve, reject) {
+      query.executeAsync({
+        handleResult: function(aResultSet) {
+          try {
+          for (let row = aResultSet.getNextRow();
+               row;
+               row = aResultSet.getNextRow()) {
+            var host = row.getResultByName("host");
+            var id = row.getResultByName("ruleset_id");
+            count ++;
+            if (!that.targets[host]) {
+              that.targets[host] = [id];
+            } else {
+              that.targets[host].push(id);
+            }
+          }
+          } catch (e) {
+            that.log(WARN, "ERROR " + e);
+          }
+        },
+        handleError: function(aError) {
+          reject("SQLite error loading targets: " + aError.message);
+        },
+
+        handleCompletion: function(aReason) {
+          if (aReason != Components.interfaces.mozIStorageStatementCallback.REASON_FINISHED) {
+            reject("SQLite query canceled or aborted!");
           } else {
-            that.targets[host].push(id);
+            var t2 =  new Date().getTime();
+            that.log(NOTE, "Loading " + count + " targets took " + (t2 - t1) / 1000.0 + " seconds");
+            that.targetsLoaded = true;
+            resolve(null);
           }
         }
-        } catch (e) {
-          that.log(WARN, "ERROR " + e);
-        }
-      },
-      handleError: function(aError) {
-        that.log(WARN, "SQLite error loading targets: " + aError.message);
-        callback();
-      },
-
-      handleCompletion: function(aReason) {
-        if (aReason != Components.interfaces.mozIStorageStatementCallback.REASON_FINISHED) {
-          that.log(WARN, "SQLite query canceled or aborted!");
-        } else {
-          var t2 =  new Date().getTime();
-          that.log(NOTE, "Loading " + count + " targets took " + (t2 - t1) / 1000.0 + " seconds");
-          that.targetsLoadingCallbacks.forEach(function(callback) {
-            callback();
-          });
-          that.targetsLoadingCallbacks = [];
-          that.targetsLoaded = true;
-        }
-      }
+      });
     });
   },
 
@@ -519,8 +508,11 @@ const HTTPSRules = {
     }
   },
 
-  // return true iff callback has been called already, false if callback will be
-  // called asynchronously
+  /**
+   * Rewrite a single URL, filling in an applicable list along the way.
+   * Precondition: all applicable rules are loaded from SQLite.
+   * Returns null if no rewrite.
+   */
   rewrittenURI: function(alist, input_uri) {
     // This function oversees the task of working out if a uri should be
     // rewritten, what it should be rewritten to, and recordkeeping of which
@@ -546,42 +538,40 @@ const HTTPSRules = {
       if (e.name != "NS_ERROR_FAILURE") {
         this.log(WARN, 'Could not get host from ' + input_uri.spec + ': ' + e);
       }
-      callback(null);
-      return true;
+      return null;
     }
     var that = this;
-    return this.potentiallyApplicableRulesets(host).then(function(rs) {
-      var uri = that.sanitiseURI(input_uri);
-      // ponder each potentially applicable ruleset, working out if it applies
-      // and recording it as active/inactive/moot/breaking in the applicable list
-      for (i = 0; i < rs.length; ++i) {
-        if (!rs[i].active) {
-          if (alist && rs[i].wouldMatch(uri, alist))
-            alist.inactive_rule(rs[i]);
-          continue;
-        }
-        blob.newuri = rs[i].transformURI(uri);
-        if (blob.newuri) {
-          if (alist) {
-            if (uri.spec in https_everywhere_blacklist) {
-              alist.breaking_rule(rs[i]);
-            } else {
-              alist.active_rule(rs[i]);
-            }
-          }
-          if (userpass_present) blob.newuri.userPass = input_uri.userPass;
-          blob.applied_ruleset = rs[i];
-          return blob;
-        }
-        if (uri.scheme == "https" && alist) {
-          // we didn't rewrite but the rule applies to this domain and the
-          // requests are going over https
-          if (rs[i].wouldMatch(uri, alist)) alist.moot_rule(rs[i]);
-          continue;
-        }
+    var rs = this.potentiallyApplicableRulesets(host);
+    var uri = that.sanitiseURI(input_uri);
+    // ponder each potentially applicable ruleset, working out if it applies
+    // and recording it as active/inactive/moot/breaking in the applicable list
+    for (i = 0; i < rs.length; ++i) {
+      if (!rs[i].active) {
+        if (alist && rs[i].wouldMatch(uri, alist))
+          alist.inactive_rule(rs[i]);
+        continue;
       }
-      return null;
-    });
+      blob.newuri = rs[i].transformURI(uri);
+      if (blob.newuri) {
+        if (alist) {
+          if (uri.spec in https_everywhere_blacklist) {
+            alist.breaking_rule(rs[i]);
+          } else {
+            alist.active_rule(rs[i]);
+          }
+        }
+        if (userpass_present) blob.newuri.userPass = input_uri.userPass;
+        blob.applied_ruleset = rs[i];
+        return blob;
+      }
+      if (uri.scheme == "https" && alist) {
+        // we didn't rewrite but the rule applies to this domain and the
+        // requests are going over https
+        if (rs[i].wouldMatch(uri, alist)) alist.moot_rule(rs[i]);
+        continue;
+      }
+    }
+    return null;
   },
 
   sanitiseURI: function(input_uri) {
@@ -665,16 +655,13 @@ const HTTPSRules = {
   },
 
   // Get all rulesets matching a given target, lazy-loading from DB as necessary.
-  // Returns true if callback was called immediately: i.e., didn't have to go async.
+  // Returns either a list of rulesets or a promise for a list of rulesets.
   rulesetsByTargets: function(targets) {
     // If the array of target hosts is not already loaded, load it
-    // (asynchronously). This should only happen once.
+    // (asynchronously). This should only happen once. (XXX TODO)
     if (!this.targetsLoaded) {
       this.log(INFO, "Loading targets");
-      this.loadTargets(this.rulesetsByTargets.bind(this, targets, callback));
-      return false;
-    } else {
-      this.log(INFO, "Targets are loaded " + this.targets["www.eff.org"]);
+      return this.loadTargets().then(this.rulesetsByTargets.bind(this, targets));
     }
     var foundIds = [];
     var neededIds = [];
@@ -689,16 +676,12 @@ const HTTPSRules = {
       });
     });
 
-    this.log(DBUG, "For targets " + targets.join(' ') +
-      ", found ids " + foundIds + ", need to load: " + neededIds);
+    this.log(DBUG, "For targets " + targets.join(' ') + ", found ids " + foundIds);
 
     if (neededIds.length === 0) {
-      var p = new Promise(function(resolve, reject) {
-        resolve(foundIds.map(id => that.rulesetsByID[id]));
-      });
-      p.done = true;
-      return p;
+      return foundIds.map(id => that.rulesetsByID[id]);
     } else {
+      this.log(DBUG, "need to load: " + neededIds);
       return Promise.all(neededIds.map(this.loadRulesetById.bind(this))).then(function() {
         return foundIds.map(id => that.rulesetsByID[id]);
       });
@@ -737,12 +720,7 @@ const HTTPSRules = {
       targetsToTry.push(t)
     }
     var that = this;
-    return this.rulesetsByTargets(targetsToTry).then(function(rulesets) {
-      that.log(DBUG,"Potentially applicable rules for " + host + ":");
-      for (i = 0; i < rulesets.length; ++i)
-        that.log(DBUG, "  " + rulesets[i].name);
-      return rulesets;
-    });
+    return this.rulesetsByTargets(targetsToTry);
   },
 
   /**
