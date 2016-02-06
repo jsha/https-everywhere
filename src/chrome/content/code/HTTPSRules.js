@@ -692,9 +692,17 @@ const HTTPSRules = {
     this.log(DBUG, "For targets " + targets.join(' ') +
       ", found ids " + foundIds + ", need to load: " + neededIds);
 
-    return Promise.all(neededIds.map(this.loadRulesetById.bind(this))).then(function() {
-      return foundIds.map(id => that.rulesetsByID[id]);
-    });
+    if (neededIds.length === 0) {
+      var p = new Promise(function(resolve, reject) {
+        resolve(foundIds.map(id => that.rulesetsByID[id]));
+      });
+      p.done = true;
+      return p;
+    } else {
+      return Promise.all(neededIds.map(this.loadRulesetById.bind(this))).then(function() {
+        return foundIds.map(id => that.rulesetsByID[id]);
+      });
+    }
   },
 
   /**
