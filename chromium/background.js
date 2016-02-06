@@ -38,31 +38,29 @@ var switchPlannerInfo = {};
 
 // Is HTTPSe enabled, or has it been manually disabled by the user?
 var isExtensionEnabled = true;
-// The setBadgeText API has an abandoned bug: https://crbug.com/170413
-chrome.browserAction.setBadgeText({ text: "" });
 
 // Load prefs about whether http nowhere is on. Structure is:
 //  { httpNowhere: true/false }
 var httpNowhereOn = false;
 chrome.storage.sync.get({httpNowhere: false}, function(item) {
   httpNowhereOn = item.httpNowhere;
-  setIconColor();
+  updateState();
 });
 chrome.storage.onChanged.addListener(function(changes, areaName) {
   if (areaName === 'sync') {
     for (var key in changes) {
       if (key === 'httpNowhere') {
         httpNowhereOn = changes[key].newValue;
-        setIconColor();
+        updateState();
       }
     }
   }
 });
 chrome.tabs.onActivated.addListener(function() {
-  setIconColor();
+  updateState();
 });
 chrome.webNavigation.onCompleted.addListener(function() {
-  setIconColor();
+  updateState();
 });
 
 /**
@@ -99,7 +97,7 @@ loadStoredUserRules();
  * active: extension is enabled and rewrote URLs on this page.
  * disabled: extension is disabled from the popup menu.
  */
-var setIconColor = function() {
+var updateState = function() {
   chrome.tabs.query({active: true}, function(tabs) {
     if (!tabs || tabs.length === 0) {
       return;
@@ -117,6 +115,9 @@ var setIconColor = function() {
       path: {
         "38": "icons/icon-" + iconState + "-38.png"
       }
+    });
+    chrome.browserAction.setTitle({
+      title: "HTTPS Everywhere (" + iconState + ")"
     });
   });
 }

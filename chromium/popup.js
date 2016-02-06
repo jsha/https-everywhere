@@ -86,7 +86,7 @@ function updateEnabledDisabledUI() {
   } else {
     document.body.className = "disabled"
   }
-  backgroundPage.setIconColor();
+  backgroundPage.updateState();
 }
 
 // Toggle extension enabled/disabled status
