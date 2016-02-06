@@ -141,7 +141,7 @@ httpsEverywhere.toolbarButton = {
       var hint = nBox.appendNotification(
         msg,
         'https-everywhere',
-        'chrome://https-everywhere/skin/https-everywhere-24.png',
+        'chrome://https-everywhere/skin/icon-active-24.png',
         nBox.PRIORITY_WARNING_MEDIUM,
         [
           { accessKey: 'F',
@@ -425,7 +425,7 @@ function migratePreferences(gBrowser) {
         nBox.appendNotification(
           msg, 
           'https-everywhere-migration0', 
-          'chrome://https-everywhere/skin/https-everywhere-24.png', 
+          'chrome://https-everywhere/skin/icon-active-24.png', 
           nBox.PRIORITY_WARNING_MEDIUM
         );
       }
