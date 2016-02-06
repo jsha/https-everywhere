@@ -143,13 +143,13 @@ RuleSet.prototype = {
     var urispec = uri.spec;
 
     this.ensureCompiled();
- 
+
     if (this.ruleset_match_c && !this.ruleset_match_c.test(urispec)) 
       return false;
- 
+
     for (var i = 0; i < this.exclusions.length; ++i) 
       if (this.exclusions[i].pattern_c.test(urispec)) return false;
- 
+
     for (var i = 0; i < this.rules.length; ++i) 
       if (this.rules[i].from_c.test(urispec)) return true;
     return false;

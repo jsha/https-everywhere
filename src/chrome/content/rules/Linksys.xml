@@ -6,10 +6,7 @@
 
 		- cache-www.linksys.com.s3.amazonaws.com
 		- downloads.linksys.com.edgesuite.net
-
-		- linksys.lithium.com
-
-			- community
+		- linksys.lithium.com	← community
 
 		- linksys-content.vcommerce.com
 
@@ -18,27 +15,20 @@
 
 	Nonfunctional hosts in *linksys.com:
 
-		- m		(shows another domain; mismatched, CN: www.linksysbycisco.com)
+		- m ᵃ		(CN: www.linksysbycisco.com)
+
+	ᵃ Shows another domain
 
 
 	Problematic hosts in *linksys.com:
 
 		- cache-www ¹
-		- downloads	(works, akamai)
+		- downloads	(akamai)
 
 	¹ AmazonAWS
 
 
-	* www.linksys.com: Some pages redirect to http
-
-
-	Fully covered hosts in *linksys.com:
-
-		- cache-www	(→ s3.amazonaws.com)
-		- community
-		- downloads	(→ akamai)
-		- store
-		- support
+	www.linksys.com: Some pages redirect to http
 
 
 	^linksys.com: Refused over https, reset over http
@@ -48,6 +38,8 @@
 
 		- community.linksys.com
 		- store.linksys.com
+		- support.linksys.com
+		- www.linksys.com
 
 
 	downloads serves mixed images on www and
@@ -66,7 +58,6 @@
 	<!--	Complications:
 				-->
 	<target host="cache-www.linksys.com" />
-	<target host="downloads.linksys.com" />
 
 		<!--	Redirects to http:
 						-->
@@ -96,6 +87,8 @@
 	<!--securecookie host="^\.linksys\.com$" name="^_gat?$" /-->
 	<!--securecookie host="store\.linksys\.com$" name="^_hybris\.tenantID_$" /-->
 	<!--securecookie host="^community\.linksys\.com$" name="^LithiumUser(?:Info|Secure)$" /-->
+	<!--securecookie host="^support\.linksys\.com$" name="^(?:_hybris\.tenantID_$|BIGipServer|JSESSION$)" /-->
+	<!--securecookie host="^www\.linksys\.com$" name="^_hybris\.tenantID_$" /-->
 
 	<!--securecookie host="." name="." /-->
 	<securecookie host="^\." name="^_gat?$" />
@@ -104,9 +97,6 @@
 
 	<rule from="^http://cache-www\.linksys\.com/"
 		to="https://cache-www.linksys.com.s3.amazonaws.com/cache-www.linksys.com/" />
-
-	<rule from="^http://downloads\.linksys\.com/"
-		to="https://a248.e.akamai.net/f/248/1126/10/downloads.linksys.com/" />
 
 	<rule from="^http:"
 		to="https:" />
