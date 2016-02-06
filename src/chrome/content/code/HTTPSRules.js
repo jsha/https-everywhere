@@ -68,10 +68,6 @@ RuleSet.prototype = {
   ensureCompiled: function() {
     // Postpone compilation of exclusions, rules and cookies until now, to accelerate
     // browser load time.
-    // NOTE: Since rulesets are now lazy-loaded in FF, this will be called immediately
-    // after the ruleset is loaded, and doesn't give much startup benefit. We
-    // may want to switch these back so patterns are compiled immediately on
-    // ruleset load, for simplicity.
     if (this.compiled) return;
     var i;
 
@@ -143,13 +139,13 @@ RuleSet.prototype = {
     var urispec = uri.spec;
 
     this.ensureCompiled();
- 
+
     if (this.ruleset_match_c && !this.ruleset_match_c.test(urispec)) 
       return false;
- 
+
     for (var i = 0; i < this.exclusions.length; ++i) 
       if (this.exclusions[i].pattern_c.test(urispec)) return false;
- 
+
     for (var i = 0; i < this.rules.length; ++i) 
       if (this.rules[i].from_c.test(urispec)) return true;
     return false;
@@ -391,6 +387,7 @@ const HTTPSRules = {
                           // applicable ruleset ids
       this.rulesetsByID = {};
       this.rulesetsByName = {};
+      this.targetsLoading = false; // Becomes a Promise while targets are loading.
       this.targetsLoaded = false;
       this.checkMixedContentHandling();
       var rulefiles = RuleWriter.enumerate(RuleWriter.getCustomRuleDir());
@@ -411,6 +408,8 @@ const HTTPSRules = {
       return new Promise(function(resolve, reject) {
         resolve(null);
       });
+    } else if (this.targetsLoading) {
+      return this.targetsLoading;
     }
     // Load the mapping of hostname target -> ruleset ID from DB.
     // This is a little slow (287 ms on a Core2 Duo @ 2.2GHz with SSD),
@@ -422,7 +421,7 @@ const HTTPSRules = {
     var that = this;
     var count = 0;
     this.log(INFO, "Querying targets");
-    return new Promise(function(resolve, reject) {
+    return this.targetsLoading = new Promise(function(resolve, reject) {
       query.executeAsync({
         handleResult: function(aResultSet) {
           try {
@@ -540,9 +539,10 @@ const HTTPSRules = {
       }
       return null;
     }
-    var that = this;
+    // Note: This does not return a promise because of the precondition that all
+    // potentially applicable rules be already loaded.
     var rs = this.potentiallyApplicableRulesets(host);
-    var uri = that.sanitiseURI(input_uri);
+    var uri = this.sanitiseURI(input_uri);
     // ponder each potentially applicable ruleset, working out if it applies
     // and recording it as active/inactive/moot/breaking in the applicable list
     for (i = 0; i < rs.length; ++i) {
@@ -622,7 +622,10 @@ const HTTPSRules = {
         intoList.push(fromList[i]);
   },
 
-  // Load a ruleset by numeric id, e.g. 234
+  /**
+   * Load a ruleset by numeric id, e.g. 234
+   * @return {Promise.<null>}
+   */
   loadRulesetById: function(ruleset_id) {
     var query = this.rulesetDBConn.createStatement(
       "select contents from rulesets where id = :id");
@@ -654,11 +657,14 @@ const HTTPSRules = {
     });
   },
 
-  // Get all rulesets matching a given target, lazy-loading from DB as necessary.
-  // Returns either a list of rulesets or a promise for a list of rulesets.
+  /**
+   * Get all rulesets matching a set of targets, lazy-loading from DB as necessary.
+   * Returns either a list of rulesets or a promise for a list of rulesets.
+   * @return {Array.<RuleSet>|Promise.<Array.<RuleSet>>}
+   */
   rulesetsByTargets: function(targets) {
     // If the array of target hosts is not already loaded, load it
-    // (asynchronously). This should only happen once. (XXX TODO)
+    // (asynchronously).
     if (!this.targetsLoaded) {
       this.log(INFO, "Loading targets");
       return this.loadTargets().then(this.rulesetsByTargets.bind(this, targets));
@@ -693,8 +699,14 @@ const HTTPSRules = {
    * The returned rulesets include those that are disabled for various reasons.
    * This function is only defined for fully-qualified hostnames. Wildcards and
    * cookie-style domain attributes with a leading dot are not permitted.
+   *
+   * Postcondition: If this function returns a Promise for any given hostname,
+   * once that Promise resolves, subsequent calls to
+   * potentiallyApplicableRulesets for the same hostname will never return a
+   * Promise (unless all rule state is cleared, e.g. in history wipe).
+   *
    * @param host {string}
-   * @return true iff we didn't have to go async to load rules
+   * @return {Array.<RuleSet>|Promise.<Array.<RuleSet>>}
    */
   potentiallyApplicableRulesets: function(host) {
     var i, tmp, t;
@@ -706,7 +718,7 @@ const HTTPSRules = {
       tmp = segmented[i];
       if (tmp.length === 0) {
         this.log(WARN,"Malformed host passed to potentiallyApplicableRulesets: " + host);
-        return false;
+        return null;
       }
       segmented[i] = "*";
       t = segmented.join(".");
@@ -719,7 +731,6 @@ const HTTPSRules = {
       t = "*." + segmented.slice(i,segmented.length).join(".");
       targetsToTry.push(t)
     }
-    var that = this;
     return this.rulesetsByTargets(targetsToTry);
   },
 
@@ -758,26 +769,15 @@ const HTTPSRules = {
     // "domain" attributes, so we strip a leading dot before calling.
     var host = this.hostFromCookieDomain(c.host);
 
-    // When checking for potentially applicable rulesets, we have to wait for a
-    // callback, because we may need to load the rulesets from disk. However, in
-    // practice this callback will always be run immediately, because the
-    // ruleset for the necessary host will have been loaded already for the HTTP
-    // request.
-    var handled = false;
-    var promise = this.potentiallyApplicableRulesets(host).then(function(rs) {
-      handled = true;
-      return this.shouldSecureCookieWithRulesets(applicable_list, c, known_https, rs);
-    }.bind(this));
-    if (handled) {
-      return promise;
-    } else {
+    // When checking for potentially applicable rulesets, we expect to always
+    // get an immediate return (not a promise), because the ruleset for the
+    // relevant host will have been loaded already for the HTTP request.
+    var rs = this.potentiallyApplicableRulesets(host);
+    if (rs.then) {
       this.log(WARN, "Shouldn't happen: rulesets were not already loaded for host " + host)
-      // Default to securing cookies if we aren't sure.
+      // Default to securing cookies if we had a problem.
       return true
     }
-  },
-
-  shouldSecureCookieWithRulesets: function(applicable_list, c, known_https, rs) {
     for (i = 0; i < rs.length; ++i) {
       var ruleset = rs[i];
       if (ruleset.active) {

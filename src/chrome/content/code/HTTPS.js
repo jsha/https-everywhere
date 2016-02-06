@@ -35,11 +35,12 @@ const HTTPS = {
    *   (i.e. those that match on a hostname basis).
    * @param {nsIChannel} channel The channel to be manipulated.
    * @param {boolean} httpNowhereEnabled Whether to abort non-https requests.
-   * @returns {Promise<boolean>}
+   * @returns {Promise.<boolean>}
    */
   replaceChannel: function(applicable_list, channel, httpNowhereEnabled) {
     var that = this;
     var resolved = false;
+    // Call this once to check if rules are loaded.
     var rulesets = HTTPSRules.potentiallyApplicableRulesets(channel.URI.host);
     // If the result is not a promise (i.e. does not have a 'then'), that means we were able to
     // answer the rewrite immediately. Proceed with replacing the channel.
@@ -85,9 +86,20 @@ const HTTPS = {
     }
   },
 
+  /**
+   * Rewrite a channel's URI according to the rules, and redirect to new URI.
+   * Precondition: All applicable rules are already loaded (i.e.,
+   * potentiallyApplicableRulesets(host) has been called and returned
+   * non-Promise).
+   *
+   * @param {RuleSet[]} applicable_list A list of potentially applicable rules
+   *   (i.e. those that match on a hostname basis).
+   * @param {nsIChannel} channel The channel to be manipulated.
+   * @param {boolean} httpNowhereEnabled Whether to abort non-https requests.
+   * @returns {boolean} Whether the channel was rewritten.
+   */
   finishReplaceChannel: function(applicable_list, channel, httpNowhereEnabled) {
     var blob = HTTPSRules.rewrittenURI(applicable_list, channel.URI.clone());
-    var that = this;
     var isSTS = securityService.isSecureURI(
         CI.nsISiteSecurityService.HEADER_HSTS, channel.URI, 0);
     if (blob === null) {
