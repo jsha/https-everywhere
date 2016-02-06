@@ -97,6 +97,7 @@ loadStoredUserRules();
  * inactive: extension is enabled, but no rules were triggered on this page.
  * blocking: extension is in "block all HTTP requests" mode.
  * active: extension is enabled and rewrote URLs on this page.
+ * disabled: extension is disabled from the popup menu.
  */
 var setIconColor = function() {
   chrome.tabs.query({active: true}, function(tabs) {
@@ -104,20 +105,18 @@ var setIconColor = function() {
       return;
     }
     var applied = activeRulesets.getRulesets(tabs[0].id)
-    var newIcon = {
-      "38": "icons/icon-inactive-38.png",
-    };
-    if (httpNowhereOn) {
-      newIcon = {
-        "38": "icons/icon-blocking-38.png",
-      };
+    var iconState = "inactive";
+    if (!isExtensionEnabled) {
+      iconState = "disabled";
+    } else if (httpNowhereOn) {
+      iconState = "blocking";
     } else if (applied) {
-      newIcon = {
-        "38": "icons/icon-active-38.png",
-      };
+      iconState = "active";
     }
     chrome.browserAction.setIcon({
-      path: newIcon
+      path: {
+        "38": "icons/icon-" + iconState + "-38.png"
+      }
     });
   });
 }
