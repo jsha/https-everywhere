@@ -1,6 +1,13 @@
+"use strict";
 // Stubs so this runs under nodejs. They get overwritten later by util.js
 var DBUG = 1;
-function log(){};
+function log(){}
+
+// To reduce memory usage for the numerous rules/cookies with trivial rules
+const trivial_rule_to = "https:";
+const trivial_rule_from_c = new RegExp("^http:");
+const trivial_cookie_name_c = new RegExp(".*");
+const trivial_cookie_host_c = new RegExp(".*");
 
 /**
  * A single rule
@@ -9,9 +16,15 @@ function log(){};
  * @constructor
  */
 function Rule(from, to) {
-  //this.from = from;
-  this.to = to;
-  this.from_c = new RegExp(from);
+  if (from === "^http:" && to === "https:") {
+    // This is a trivial rule, rewriting http->https with no complex RegExp.
+    this.to = trivial_rule_to;
+    this.from_c = trivial_rule_from_c;
+  } else {
+    // This is a non-trivial rule.
+    this.to = to;
+    this.from_c = new RegExp(from);
+  }
 }
 
 /**
@@ -20,7 +33,6 @@ function Rule(from, to) {
  * @constructor
  */
 function Exclusion(pattern) {
-  //this.pattern = pattern;
   this.pattern_c = new RegExp(pattern);
 }
 
@@ -31,10 +43,19 @@ function Exclusion(pattern) {
  * @constructor
  */
 function CookieRule(host, cookiename) {
-  this.host = host;
-  this.host_c = new RegExp(host);
-  this.name = cookiename;
-  this.name_c = new RegExp(cookiename);
+  if (host === ".*" || host === ".+" || host === ".") {
+    // Some cookie rules trivially match any host.
+    this.host_c = trivial_cookie_host_c;
+  } else {
+    this.host_c = new RegExp(host);
+  }
+
+  if (cookiename === ".*" || cookiename === ".+" || cookiename === ".") {
+    // About 50% of cookie rules trivially match any name.
+    this.name_c = trivial_cookie_name_c;
+  } else {
+    this.name_c = new RegExp(cookiename);
+  }
 }
 
 /**
@@ -47,9 +68,8 @@ function CookieRule(host, cookiename) {
 function RuleSet(set_name, default_state, note) {
   this.name = set_name;
   this.rules = [];
-  this.exclusions = [];
-  this.targets = [];
-  this.cookierules = [];
+  this.exclusions = null;
+  this.cookierules = null;
   this.active = default_state;
   this.default_state = default_state;
   this.note = note;
@@ -64,10 +84,12 @@ RuleSet.prototype = {
   apply: function(urispec) {
     var returl = null;
     // If we're covered by an exclusion, go home
-    for(var i = 0; i < this.exclusions.length; ++i) {
-      if (this.exclusions[i].pattern_c.test(urispec)) {
-        log(DBUG,"excluded uri " + urispec);
-        return null;
+    if (this.exclusions !== null) {
+      for (var i = 0; i < this.exclusions.length; ++i) {
+        if (this.exclusions[i].pattern_c.test(urispec)) {
+          log(DBUG, "excluded uri " + urispec);
+          return null;
+        }
       }
     }
 
@@ -86,26 +108,24 @@ RuleSet.prototype = {
 
 /**
  * Initialize Rule Sets
- * @param userAgent The browser's user agent
- * @param cache a cache object (lru)
  * @param ruleActiveStates default state for rules
  * @constructor
  */
-function RuleSets(userAgent, cache, ruleActiveStates) {
+function RuleSets(ruleActiveStates) {
   // Load rules into structure
-  var t1 = new Date().getTime();
   this.targets = {};
-  this.userAgent = userAgent;
 
   // A cache for potentiallyApplicableRulesets
-  // Size chosen /completely/ arbitrarily.
-  this.ruleCache = new cache(1000);
+  this.ruleCache = new Map();
 
   // A cache for cookie hostnames.
-  this.cookieHostCache = new cache(100);
+  this.cookieHostCache = new Map();
 
   // A hash of rule name -> active status (true/false).
   this.ruleActiveStates = ruleActiveStates;
+
+  // A regex to match platform-specific features
+  this.localPlatformRegexp = new RegExp("chromium");
 }
 
 
@@ -125,21 +145,6 @@ RuleSets.prototype = {
   },
 
   /**
-   * Return the RegExp for the local platform
-   */
-  localPlatformRegexp: (function() {
-    var isOpera = /(?:OPR|Opera)[\/\s](\d+)(?:\.\d+)/.test(this.userAgent);
-    if (isOpera && isOpera.length === 2 && parseInt(isOpera[1]) < 23) {
-      // Opera <23 does not have mixed content blocking
-      log(DBUG, 'Detected that we are running Opera < 23');
-      return new RegExp("chromium|mixedcontent");
-    } else {
-      log(DBUG, 'Detected that we are running Chrome/Chromium');
-      return new RegExp("chromium");
-    }
-  })(),
-
-  /**
    * Load a user rule
    * @param params
    * @returns {boolean}
@@ -152,7 +157,7 @@ RuleSets.prototype = {
     if (!(params.host in this.targets)) {
       this.targets[params.host] = [];
     }
-    this.ruleCache.remove(params.host);
+    this.ruleCache.delete(params.host);
     // TODO: maybe promote this rule?
     this.targets[params.host].push(new_rule_set);
     if (new_rule_set.name in this.ruleActiveStates) {
@@ -176,7 +181,7 @@ RuleSets.prototype = {
     }
 
     // If a ruleset declares a platform, and we don't match it, treat it as
-    // off-by-default
+    // off-by-default. In practice, this excludes "mixedcontent" & "cacert" rules.
     var platform = ruletag.getAttribute("platform");
     if (platform) {
       if (platform.search(this.localPlatformRegexp) == -1) {
@@ -201,15 +206,22 @@ RuleSets.prototype = {
     }
 
     var exclusions = ruletag.getElementsByTagName("exclusion");
-    for(var j = 0; j < exclusions.length; j++) {
-      rule_set.exclusions.push(
+    if (exclusions.length > 0) {
+      rule_set.exclusions = [];
+      for (var j = 0; j < exclusions.length; j++) {
+        rule_set.exclusions.push(
             new Exclusion(exclusions[j].getAttribute("pattern")));
+      }
     }
 
     var cookierules = ruletag.getElementsByTagName("securecookie");
-    for(var j = 0; j < cookierules.length; j++) {
-      rule_set.cookierules.push(new CookieRule(cookierules[j].getAttribute("host"),
-                                           cookierules[j].getAttribute("name")));
+    if (cookierules.length > 0) {
+      rule_set.cookierules = [];
+      for(var j = 0; j < cookierules.length; j++) {
+        rule_set.cookierules.push(
+            new CookieRule(cookierules[j].getAttribute("host"),
+                cookierules[j].getAttribute("name")));
+      }
     }
 
     var targets = ruletag.getElementsByTagName("target");
@@ -220,19 +232,6 @@ RuleSets.prototype = {
        }
        this.targets[host].push(rule_set);
     }
-  },
-
-  /**
-   * Insert any elements from fromList into intoList, if they are not
-   * already there.  fromList may be null.
-   * @param intoList
-   * @param fromList
-   */
-  setInsert: function(intoList, fromList) {
-    if (!fromList) return;
-    for (var i = 0; i < fromList.length; i++)
-      if (intoList.indexOf(fromList[i]) == -1)
-        intoList.push(fromList[i]);
   },
 
   /**
@@ -253,7 +252,7 @@ RuleSets.prototype = {
     var results = [];
     if (this.targets[host]) {
       // Copy the host targets so we don't modify them.
-      results = this.targets[host].slice();
+      results = results.concat(this.targets[host]);
     }
 
     // Replace each portion of the domain with a * in turn
@@ -261,48 +260,60 @@ RuleSets.prototype = {
     for (var i = 0; i < segmented.length; ++i) {
       tmp = segmented[i];
       segmented[i] = "*";
-      this.setInsert(results, this.targets[segmented.join(".")]);
+      results = results.concat(this.targets[segmented.join(".")]);
       segmented[i] = tmp;
     }
     // now eat away from the left, with *, so that for x.y.z.google.com we
     // check *.z.google.com and *.google.com (we did *.y.z.google.com above)
     for (var i = 2; i <= segmented.length - 2; ++i) {
-      t = "*." + segmented.slice(i,segmented.length).join(".");
-      this.setInsert(results, this.targets[t]);
+      var t = "*." + segmented.slice(i,segmented.length).join(".");
+      results = results.concat(this.targets[t]);
     }
+
+    // Clean the results list, which may contain duplicates or undefined entries
+    var resultSet = new Set(results);
+    resultSet.delete(undefined);
+
     log(DBUG,"Applicable rules for " + host + ":");
-    if (results.length == 0)
+    if (resultSet.size == 0) {
       log(DBUG, "  None");
-    else
-      for (var i = 0; i < results.length; ++i)
-        log(DBUG, "  " + results[i].name);
+    } else {
+      for (let target of resultSet.values()) {
+        log(DBUG, "  " + target.name);
+      }
+    }
 
     // Insert results into the ruleset cache
-    this.ruleCache.set(host, results);
-    return results;
+    this.ruleCache.set(host, resultSet);
+
+    // Cap the size of the cache. (Limit chosen somewhat arbitrarily)
+    if (this.ruleCache.size > 1000) {
+      // Map.prototype.keys() returns keys in insertion order, so this is a FIFO.
+      this.ruleCache.delete(this.ruleCache.keys().next().value);
+    }
+
+    return resultSet;
   },
 
   /**
    * Check to see if the Cookie object c meets any of our cookierule criteria for being marked as secure.
-   * knownHttps is true if the context for this cookie being set is known to be https.
    * @param cookie The cookie to test
-   * @param knownHttps Is the context for setting this cookie is https ?
    * @returns {*} ruleset or null
    */
-  shouldSecureCookie: function(cookie, knownHttps) {
+  shouldSecureCookie: function(cookie) {
     var hostname = cookie.domain;
     // cookie domain scopes can start with .
-    while (hostname.charAt(0) == ".")
+    while (hostname.charAt(0) == ".") {
       hostname = hostname.slice(1);
+    }
 
-    if (!knownHttps && !this.safeToSecureCookie(hostname)) {
+    if (!this.safeToSecureCookie(hostname)) {
         return null;
     }
 
-    var rs = this.potentiallyApplicableRulesets(hostname);
-    for (var i = 0; i < rs.length; ++i) {
-      var ruleset = rs[i];
-      if (ruleset.active) {
+    var potentiallyApplicable = this.potentiallyApplicableRulesets(hostname);
+    for (let ruleset of potentiallyApplicable) {
+      if (ruleset.cookierules !== null && ruleset.active) {
         for (var j = 0; j < ruleset.cookierules.length; j++) {
           var cr = ruleset.cookierules[j];
           if (cr.host_c.test(cookie.domain) && cr.name_c.test(cookie.name)) {
@@ -332,7 +343,7 @@ RuleSets.prototype = {
     // observed and the domain blacklisted, a cookie might already have been
     // flagged as secure.
 
-    if (domain in domainBlacklist) {
+    if (domainBlacklist.has(domain)) {
       log(INFO, "cookies for " + domain + "blacklisted");
       return false;
     }
@@ -349,11 +360,19 @@ RuleSets.prototype = {
     var nonce_path = "/" + Math.random().toString();
     var test_uri = "http://" + domain + nonce_path + nonce_path;
 
+    // Cap the size of the cookie cache (limit chosen somewhat arbitrarily)
+    if (this.cookieHostCache.size > 250) {
+      // Map.prototype.keys() returns keys in insertion order, so this is a FIFO.
+      this.cookieHostCache.delete(this.cookieHostCache.keys().next().value);
+    }
+
     log(INFO, "Testing securecookie applicability with " + test_uri);
-    var rs = this.potentiallyApplicableRulesets(domain);
-    for (var i = 0; i < rs.length; ++i) {
-      if (!rs[i].active) continue;
-      if (rs[i].apply(test_uri)) {
+    var potentiallyApplicable = this.potentiallyApplicableRulesets(domain);
+    for (let ruleset of potentiallyApplicable) {
+      if (!ruleset.active) {
+        continue;
+      }
+      if (ruleset.apply(test_uri)) {
         log(INFO, "Cookie domain could be secured.");
         this.cookieHostCache.set(domain, true);
         return true;
@@ -372,10 +391,11 @@ RuleSets.prototype = {
    */
   rewriteURI: function(urispec, host) {
     var newuri = null;
-    var rs = this.potentiallyApplicableRulesets(host);
-    for(var i = 0; i < rs.length; ++i) {
-      if (rs[i].active && (newuri = rs[i].apply(urispec)))
+    var potentiallyApplicable = this.potentiallyApplicableRulesets(host);
+    for (let ruleset of potentiallyApplicable) {
+      if (ruleset.active && (newuri = ruleset.apply(urispec))) {
         return newuri;
+      }
     }
     return null;
   }
